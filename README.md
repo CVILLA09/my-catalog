@@ -1,31 +1,50 @@
+<a name="readme-top"></a>
+<div align="center">
+ <h1><b> Welcome To Our Ruby Capstone Project! </b></h1>
+</div>  
+
+<br/>
+
+<div align="center">
+  <img src="https://media0.giphy.com/media/3o6EhLLR11yImdvcA0/giphy.gif" alt="readme-gif" width="500" height="400" style="display: inline-block;">
+</div>
+
+<br/>
+
+<div align="center">
+  <h1 style="border-bottom: none;"> 📚 🎵 Catalog of My Things 🎮 🎥 </h1>
+</div>
+
+<br/>
+
+
 <!-- TABLE OF CONTENTS -->
 
 # 📗 Table of Contents
-  - [Catalog-of-my-things 📚🎵🎮](#walkthrough)
-  - [Walkthrough video 🎥](##walkthrough-video)
+  - [📖 About the Project](#about-project)
+  - [🎥 Walkthrough video](##walkthrough-video)
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
   - [💻 Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
   - [👥 Authors](#authors)
-    - [Author:](#author)
   - [🔭 Future Features](#future-features)
   - [🤝 Contributing](#contributing)
-  - [👋 Show your support](#show-your-support)
-  - [🔭 Acknowledgments](#acknowledgments)
+  - [⭐️ Show your support](#support)
+  - [🙏 Acknowledgements](#acknowledgements)
   - [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
-# Catalog-of-my-things 📚🎵🎮🎥<a name="about-project"></a>
+# Catalog of My Things 📚 🎵 🎮 🎥 <a name="about-project"></a>
 
-Catalog of my things is a simple console app that allows users to manage collections of the things they own: books, music albums and movies Everything is based on the UML class diagram presented below.
+Catalog of my things is a simple console app that allows users to manage collections of the things they own: books, music albums and movies. Everything is based on the UML class diagram presented below.
 
-![catalog_of_my_things]()
+![catalog_of_my_things](https://github.com/CVILLA09/my-catalog/blob/setup/assets/catalog_of_my_things.png?raw=true)
 
 ## Walkthrough video 🎥<a name="#walkthrough-video"></a>
 
-- Comming Soon
+[Comming Soon!]()
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -44,7 +63,7 @@ To get a local copy up and running, follow these steps.
 
 In order to run this project you need:
 
-You have to have tools like: 
+You need to have installed: 
 
 - Ruby
 - Rspec
@@ -59,7 +78,7 @@ git git@github.com:CVILLA09/my-catalog.git
 Go to the project directory.
 
 ```bash
-  cd catalog-of-my-things
+  cd my-catalog
 ```
 ```bash
   bundle install
@@ -91,7 +110,7 @@ To run tests, run the following command:
 👤 **Cristian Villa**
 
 - GitHub: [@Cristian Villa](https://github.com/CVILLA09)
-- LinkedIn: [@Cristian Villa](https://www.linkedin.com/in/cristian-villa-5b518127b/)
+- LinkedIn: [@Cristian Villa](https://www.linkedin.com/in/cristianvillavirgen/)
 
 👤 **Kenny Henshaw**
 
@@ -115,13 +134,13 @@ To run tests, run the following command:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/CVILLA09/my-catalog/issues).
+Feel free to check the [issues page](https://github.com/kazim110/SpaceTraveler/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- SUPPORT -->
 
-## 👋 Show your support <a name="support"></a>
+## ⭐️ Show your support <a name="support"></a>
 
 Give a ⭐️ if you like this project!
 
@@ -129,10 +148,13 @@ Give a ⭐️ if you like this project!
 
 <!-- ACKNOWLEDGEMENTS -->
 
-## 🔭Acknowledgments <a name="acknowledgements"></a>
+## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-- [Microverse](https://www.microverse.org/).
+Thanks to all <img src="https://assets-global.website-files.com/5dbb30f00775d4c32191a4df/61b33c641028e40f097ca160_microverse-nav-logo-170.png" width="108" height="18"> community.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
 
 ## 📝 License <a name="license"></a>
 
