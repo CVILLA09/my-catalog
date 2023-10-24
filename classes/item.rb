@@ -5,7 +5,7 @@ class Item
   attr_reader :id
   attr_accessor :publish_date, :archived, :genre, :author, :label
 
-  def initialize(publish_date, archived: false, id: nil)
+  def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
     @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
     @archived = archived
@@ -21,9 +21,3 @@ class Item
     @archived = true if can_be_archived?
   end
 end
-
-test_item = Item.new('2013/02/05')
-test_item.genre = 'Rock'
-
-puts test_item.genre
-puts test_item.id

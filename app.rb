@@ -22,33 +22,59 @@ class ConsoleApp
       process_choice(choice)
     end
   end
-  
+
   def process_choice(choice)
-    case choice
-    when 1
-      @book_manager.list_books
-    when 2
-      @music_album_manager.list_music_albums
-    when 3
-      @game_manager.list_games
-    when 4
-      list_genres
-    when 5
-      list_labels
-    when 6
-      list_authors
-    when 7
-      @book_manager.add_book
-    when 8
-      @music_album_manager.add_music_album
-    when 9
-      @game_manager.add_game
-    when 10
-      puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
-      exit
+    actions = {
+      1 => method(:list_books),
+      2 => method(:list_music_albums),
+      3 => method(:list_games),
+      4 => method(:list_genres),
+      5 => method(:list_labels),
+      6 => method(:list_authors),
+      7 => method(:add_book),
+      8 => method(:add_music_album),
+      9 => method(:add_game),
+      10 => method(:exit_app)
+    }
+
+    if actions.include?(choice)
+      actions[choice].call
     else
-      puts 'Invalid choice. Please select a valid option.'
+      invalid_choice
     end
+  end
+
+  def list_books
+    @book_manager.list_books
+  end
+
+  def list_music_albums
+    @music_album_manager.list_music_albums
+  end
+
+  def list_games
+    @game_manager.list_games
+  end
+
+  def add_book
+    @book_manager.add_book
+  end
+
+  def add_music_album
+    @music_album_manager.add_music_album
+  end
+
+  def add_game
+    @game_manager.add_game
+  end
+
+  def exit_app
+    puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
+    exit
+  end
+
+  def invalid_choice
+    puts 'Invalid choice. Please select a valid option.'
   end
 
   def display_menu
