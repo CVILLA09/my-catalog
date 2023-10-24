@@ -1,8 +1,13 @@
 require_relative 'classes/item'
+require_relative 'classes/book_manager'
+require_relative 'classes/music_album_manager'
+require_relative 'classes/game_manager'
 
 class ConsoleApp
   def initialize
-    @items = []
+    @book_manager = BookManager.new
+    @music_album_manager = MusicAlbumManager.new
+    @game_manager = GameManager.new
     @genres = []
     @labels = []
     @authors = []
@@ -21,11 +26,11 @@ class ConsoleApp
   def process_choice(choice)
     case choice
     when 1
-      list_books
+      @book_manager.list_books
     when 2
-      list_music_albums
+      @music_album_manager.list_music_albums
     when 3
-      list_games
+      @game_manager.list_games
     when 4
       list_genres
     when 5
@@ -33,11 +38,11 @@ class ConsoleApp
     when 6
       list_authors
     when 7
-      add_book
+      @book_manager.add_book
     when 8
-      add_music_album
+      @music_album_manager.add_music_album
     when 9
-      add_game
+      @game_manager.add_game
     when 10
       puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
       exit
@@ -63,39 +68,6 @@ class ConsoleApp
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
     "#{index}) #{formatted_attrs}"
-  end
-
-  def list_books
-    if @items.empty?
-      puts 'There are no books yet!'
-    else
-      puts 'List of all books:'
-      @items.each_with_index do |book, index|
-        puts format_item(index, book, :author, :title, :publisher, :genre, :cover_state, :label)
-      end
-    end
-  end
-
-  def list_music_albums
-    if @items.empty?
-      puts 'There are no music albums yet!'
-    else
-      puts 'List of all music albums:'
-      @items.each_with_index do |album, index|
-        puts format_item(index, album, :album, :artist, :genre, :on_spotify, :label)
-      end
-    end
-  end
-
-  def list_games
-    if @items.empty?
-      puts 'There are no games yet!'
-    else
-      puts 'List of all games:'
-      @items.each_with_index do |game, index|
-        puts format_item(index, game, :title, :author, :genre, :multiplayer, :last_played, :label)
-      end
-    end
   end
 
   def list_genres
@@ -163,74 +135,5 @@ class ConsoleApp
     end
     puts 'Press any key to return to the main menu'
     gets.chomp
-  end
-
-  def add_book
-    puts 'Enter the details for the book:'
-    print 'Author: '
-    author = gets.chomp
-    print 'Title: '
-    title = gets.chomp
-    print 'Publisher: '
-    publisher = gets.chomp
-    print 'Publish Date (YYYY/MM/DD): '
-    publish_date = gets.chomp
-    print 'Genre: '
-    genre = gets.chomp
-    print 'Cover State: '
-    cover_state = gets.chomp
-    print 'Label: '
-    label = gets.chomp
-
-    # Create a new book and add it to the items list
-    book = Book.new(author, title, publisher, publish_date, genre, cover_state, label)
-    @items << book
-
-    puts 'Thanks! Your book has been created:'
-    puts "0) Author: #{book.author}, Title: #{book.title}, Publisher: #{book.publisher}, Genre: #{book.genre}, Cover_state: #{book.cover_state}, Label: #{book.label}"
-  end
-
-  def add_music_album
-    puts 'Enter the details for the music album:'
-    print 'Album: '
-    album = gets.chomp
-    print 'Artist: '
-    artist = gets.chomp
-    print 'Genre: '
-    genre = gets.chomp
-    print 'On Spotify?(Y/N): '
-    on_spotify = gets.chomp
-    print 'Label: '
-    label = gets.chomp
-
-    # Create a new music album and add it to the items list
-    music_album = MusicAlbum.new(album, artist, genre, on_spotify, label)
-    @items << music_album
-
-    puts 'Thanks! Your music album has been created:'
-    puts "0) Album: #{music_album.album}, Artist: #{music_album.artist}, Genre: #{music_album.genre}, On_Spotify: #{music_album.on_spotify}, Label: #{music_album.label}"
-  end
-
-  def add_game
-    puts 'Enter the details for the game:'
-    print 'Title: '
-    title = gets.chomp
-    print 'Author: '
-    author = gets.chomp
-    print 'Genre: '
-    genre = gets.chomp
-    print 'Multiplayer?(Y/N): '
-    multiplayer = gets.chomp
-    print 'Last played: '
-    last_played = gets.chomp
-    print 'Label: '
-    label = gets.chomp
-
-    # Create a new game and add it to the items list
-    game = Game.new(title, author, genre, multiplayer, last_played, label)
-    @items << game
-
-    puts 'Thanks! Your game has been created:'
-    puts "0) Title: #{game.title}, Author: #{game.author}, Genre: #{game.genre}, Multiplayer: #{game.multiplayer}, Last played: #{game.last_played}, Label: #{game.label}"
   end
 end
