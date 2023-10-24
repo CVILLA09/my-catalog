@@ -14,32 +14,35 @@ class ConsoleApp
       display_menu
       print 'Select: '
       choice = gets.chomp.to_i
-
-      case choice
-      when 1
-        list_books
-      when 2
-        list_music_albums
-      when 3
-        list_games
-      when 4
-        list_genres
-      when 5
-        list_labels
-      when 6
-        list_authors
-      when 7
-        add_book
-      when 8
-        add_music_album
-      when 9
-        add_game
-      when 10
-        puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
-        break
-      else
-        puts 'Invalid choice. Please select a valid option.'
-      end
+      process_choice(choice)
+    end
+  end
+  
+  def process_choice(choice)
+    case choice
+    when 1
+      list_books
+    when 2
+      list_music_albums
+    when 3
+      list_games
+    when 4
+      list_genres
+    when 5
+      list_labels
+    when 6
+      list_authors
+    when 7
+      add_book
+    when 8
+      add_music_album
+    when 9
+      add_game
+    when 10
+      puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
+      exit
+    else
+      puts 'Invalid choice. Please select a valid option.'
     end
   end
 
@@ -57,13 +60,18 @@ class ConsoleApp
     puts '10 - Exit'
   end
 
+  def format_item(index, item, *attributes)
+    formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
+    "#{index}) #{formatted_attrs}"
+  end
+
   def list_books
     if @items.empty?
       puts 'There are no books yet!'
     else
       puts 'List of all books:'
       @items.each_with_index do |book, index|
-        puts "#{index}) Author: #{book.author}, Title: #{book.title}, Publisher: #{book.publisher}, Genre: #{book.genre}, Cover_state: #{book.cover_state}, Label: #{book.label}"
+        puts format_item(index, book, :author, :title, :publisher, :genre, :cover_state, :label)
       end
     end
   end
@@ -74,7 +82,7 @@ class ConsoleApp
     else
       puts 'List of all music albums:'
       @items.each_with_index do |album, index|
-        puts "#{index}) Album: #{album.album}, Artist: #{album.artist}, Genre: #{album.genre}, On_Spotify: #{album.on_spotify}, Label: #{album.label}"
+        puts format_item(index, album, :album, :artist, :genre, :on_spotify, :label)
       end
     end
   end
@@ -85,7 +93,7 @@ class ConsoleApp
     else
       puts 'List of all games:'
       @items.each_with_index do |game, index|
-        puts "#{index}) Title: #{game.title}, Author: #{game.author}, Genre: #{game.genre}, Multiplayer: #{game.multiplayer}, Last played: #{game.last_played}, Label: #{game.label}"
+        puts format_item(index, game, :title, :author, :genre, :multiplayer, :last_played, :label)
       end
     end
   end
