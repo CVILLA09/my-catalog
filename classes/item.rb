@@ -3,12 +3,25 @@ require 'date'
 class Item
   ## Attributes
   attr_reader :id
-  attr_accessor :publish_date, :archived, :genre, :author, :label
+  attr_accessor :publish_date, :archived
 
   def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
     @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
     @archived = archived
+  end
+
+  # Custom setter methods
+  def genre=(value)
+    @genre = value.strip.capitalize
+  end
+
+  def author=(value)
+    @author = value.strip.capitalize
+  end
+
+  def label=(value)
+    @label = value.strip.upcase
   end
 
   ## Methods
