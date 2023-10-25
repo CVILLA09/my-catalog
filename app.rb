@@ -2,13 +2,14 @@ require_relative 'classes/item'
 require_relative 'classes/book_manager'
 require_relative 'classes/music_album_manager'
 require_relative 'classes/game_manager'
+require_relative 'classes/genre_manager'
 
 class ConsoleApp
   def initialize
     @book_manager = BookManager.new
     @music_album_manager = MusicAlbumManager.new
     @game_manager = GameManager.new
-    @genres = []
+    @genres = GenreManager.new
     @labels = []
     @authors = []
   end
