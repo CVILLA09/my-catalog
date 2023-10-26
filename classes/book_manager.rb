@@ -30,17 +30,20 @@ class BookManager
     cover_state = gets.chomp
     print 'Label: '
     label = gets.chomp
-
+  
     # Create a new book and add it to the books list
-    book = Book.new(author, title, publisher, publish_date, genre, cover_state, label)
+    book = Book.new(publish_date, publisher, cover_state, archived: false)
+    book.author = author
+    book.title = title
+    book.genre = genre
+    book.label = label
+    
     @books << book
-
+  
     puts 'Thanks! Your book has been created:'
-    puts "0) Author: #{book.author}, Title: #{book.title}, Publisher: #{book.publisher}, " \
-         "Genre: #{book.genre}, Cover_state: #{book.cover_state}, Label: #{book.label}"
-  end
+    puts format_item(@books.length - 1, book, :author, :title, :publisher, :genre, :cover_state, :label)
+  end  
 
-  # If you're using this method in this class, it should be defined here as well.
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
     "#{index}) #{formatted_attrs}"
