@@ -19,37 +19,29 @@ class BookManager
   end
 
   def add_book
+    attributes = collect_user_input
+    create_and_add_book(attributes)
+  end
+
+  def collect_user_input
     puts 'Enter the details for the book:'
-    author, title, publisher, publish_date, genre, cover_state, label = get_user_input
-    create_and_add_book(author, title, publisher, publish_date, genre, cover_state, label)
+    attributes = {}
+    %w[Author Title Publisher Publish_Date Genre Cover_State Label].each do |field|
+      print "#{field}: "
+      attributes[field.downcase.to_sym] = gets.chomp
+    end
+    attributes
   end
 
-  def get_user_input
-    print 'Author: '
-    author = gets.chomp
-    print 'Title: '
-    title = gets.chomp
-    print 'Publisher: '
-    publisher = gets.chomp
-    print 'Publish Date (YYYY/MM/DD): '
-    publish_date = gets.chomp
-    print 'Genre: '
-    genre = gets.chomp
-    print 'Cover State: '
-    cover_state = gets.chomp
-    print 'Label: '
-    label = gets.chomp
-    [author, title, publisher, publish_date, genre, cover_state, label]
-  end
-
-  def create_and_add_book(author, title, publisher, publish_date, genre, cover_state, label)
-    new_label = Label.new(label, 'red')
+  def create_and_add_book(attributes)
+    new_label = Label.new(attributes[:label], 'red')
     @label_manager.labels << new_label
 
-    book = Book.new(publish_date, title, publisher, cover_state, archived: false)
-    book.author = author
-    book.title = title
-    book.genre = genre
+    book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state],
+                    archived: false)
+    book.author = attributes[:author]
+    book.title = attributes[:title]
+    book.genre = attributes[:genre]
     book.label = new_label
 
     @books << book
