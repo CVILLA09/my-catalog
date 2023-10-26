@@ -6,7 +6,7 @@ require_relative 'classes/label_manager'
 
 class ConsoleApp
   def initialize
-    @label_manager = LabelManager.new 
+    @label_manager = LabelManager.new
     @book_manager = BookManager.new(@label_manager)
     @music_album_manager = MusicAlbumManager.new
     @game_manager = GameManager.new
@@ -133,7 +133,7 @@ class ConsoleApp
       puts 'List of all labels:'
       @label_manager.list_labels
     end
-  end  
+  end
 
   def list_authors
     puts 'Select category for authors:'

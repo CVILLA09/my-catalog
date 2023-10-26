@@ -20,6 +20,11 @@ class BookManager
 
   def add_book
     puts 'Enter the details for the book:'
+    author, title, publisher, publish_date, genre, cover_state, label = get_user_input
+    create_and_add_book(author, title, publisher, publish_date, genre, cover_state, label)
+  end
+
+  def get_user_input
     print 'Author: '
     author = gets.chomp
     print 'Title: '
@@ -34,25 +39,24 @@ class BookManager
     cover_state = gets.chomp
     print 'Label: '
     label = gets.chomp
-  
-    # Create a new Label object
-    new_label = Label.new(label, 'red')
+    [author, title, publisher, publish_date, genre, cover_state, label]
+  end
 
-    # Add the new Label to LabelManager
+  def create_and_add_book(author, title, publisher, publish_date, genre, cover_state, label)
+    new_label = Label.new(label, 'red')
     @label_manager.labels << new_label
 
-    # Create a new book and add it to the books list
     book = Book.new(publish_date, title, publisher, cover_state, archived: false)
     book.author = author
     book.title = title
     book.genre = genre
     book.label = new_label
-    
+
     @books << book
-  
+
     puts 'Thanks! Your book has been created:'
     puts format_item(@books.length - 1, book, :author, :title, :publisher, :genre, :cover_state, :label)
-  end  
+  end
 
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
