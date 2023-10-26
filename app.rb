@@ -2,10 +2,12 @@ require_relative 'classes/item'
 require_relative 'classes/book_manager'
 require_relative 'classes/music_album_manager'
 require_relative 'classes/game_manager'
+require_relative 'classes/label_manager'
 
 class ConsoleApp
   def initialize
-    @book_manager = BookManager.new
+    @label_manager = LabelManager.new
+    @book_manager = BookManager.new(@label_manager)
     @music_album_manager = MusicAlbumManager.new
     @game_manager = GameManager.new
     @genres = []
@@ -125,13 +127,11 @@ class ConsoleApp
   end
 
   def list_labels
-    if @labels.empty?
+    if @label_manager.labels.empty?
       puts 'There are no labels yet!'
     else
       puts 'List of all labels:'
-      @labels.each_with_index do |label, index|
-        puts "#{index}) Title: #{label.title}, Color: #{label.color}"
-      end
+      @label_manager.list_labels
     end
   end
 

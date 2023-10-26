@@ -1,6 +1,10 @@
+require_relative 'book'
+require_relative 'label'
+
 class BookManager
-  def initialize
+  def initialize(label_manager)
     @books = []
+    @label_manager = label_manager
   end
 
   def list_books
@@ -15,32 +19,37 @@ class BookManager
   end
 
   def add_book
-    puts 'Enter the details for the book:'
-    print 'Author: '
-    author = gets.chomp
-    print 'Title: '
-    title = gets.chomp
-    print 'Publisher: '
-    publisher = gets.chomp
-    print 'Publish Date (YYYY/MM/DD): '
-    publish_date = gets.chomp
-    print 'Genre: '
-    genre = gets.chomp
-    print 'Cover State: '
-    cover_state = gets.chomp
-    print 'Label: '
-    label = gets.chomp
+    attributes = collect_user_input
+    create_and_add_book(attributes)
+  end
 
-    # Create a new book and add it to the books list
-    book = Book.new(author, title, publisher, publish_date, genre, cover_state, label)
+  def collect_user_input
+    puts 'Enter the details for the book:'
+    attributes = {}
+    %w[Author Title Publisher Publish_Date Genre Cover_State Label].each do |field|
+      print "#{field}: "
+      attributes[field.downcase.to_sym] = gets.chomp
+    end
+    attributes
+  end
+
+  def create_and_add_book(attributes)
+    new_label = Label.new(attributes[:label], 'red')
+    @label_manager.labels << new_label
+
+    book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state],
+                    archived: false)
+    book.author = attributes[:author]
+    book.title = attributes[:title]
+    book.genre = attributes[:genre]
+    book.label = new_label
+
     @books << book
 
     puts 'Thanks! Your book has been created:'
-    puts "0) Author: #{book.author}, Title: #{book.title}, Publisher: #{book.publisher}, " \
-         "Genre: #{book.genre}, Cover_state: #{book.cover_state}, Label: #{book.label}"
+    puts format_item(@books.length - 1, book, :author, :title, :publisher, :genre, :cover_state, :label)
   end
 
-  # If you're using this method in this class, it should be defined here as well.
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
     "#{index}) #{formatted_attrs}"

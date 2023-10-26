@@ -40,7 +40,7 @@
 
 Catalog of my things is a simple console app that allows users to manage collections of the things they own: books, music albums and movies. Everything is based on the UML class diagram presented below.
 
-![catalog_of_my_things](https://github.com/CVILLA09/my-catalog/blob/setup/assets/catalog_of_my_things.png?raw=true)
+![catalog_of_my_things](https://github.com/CVILLA09/my-catalog/blob/develop/assets/catalog_of_my_things.png?raw=true)
 
 ## Walkthrough video 🎥<a name="#walkthrough-video"></a>
 
