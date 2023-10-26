@@ -21,7 +21,11 @@ class Item
   end
 
   def label=(value)
-    @label = value.strip.upcase
+    if value.is_a?(Label)
+      @label = value
+    else
+      @label = value.strip.upcase
+    end
   end
 
   def source=(value)

@@ -5,5 +5,9 @@ class Label
       @title = title
       @color = color
     end
+  
+    def to_s
+      "Title: #{@title}, Color: #{@color}"
+    end
   end
   
