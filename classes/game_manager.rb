@@ -27,7 +27,7 @@ class GameManager
     print 'Genre: '
     genre = gets.chomp
     print 'Multiplayer?(Y/N): '
-    multiplayer = gets.chomp
+    multiplayer = gets.chomp.upcase == 'Y' ? true : false
     print 'Last played: '
     last_played = gets.chomp
     print 'Label: '
