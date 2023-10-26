@@ -3,7 +3,7 @@ class MusicAlbum < Item
     attr_accessor :album, :artist, :genre, :on_spotify, :label, :publish_date
   
     def initialize(album, artist, genre, on_spotify, label, publish_date)
-      super(publish_date) # Pass the publish_date to the parent class constructor
+      super(publish_date) 
       @album = album
       @artist = artist
       @genre = genre

@@ -86,6 +86,8 @@ class MusicAlbumManager
       }
     end
 
-    File.write('music_albums.json', JSON.generate(music_album_data))
+    File.open('music_albums.json', 'w') do |file| 
+      file.puts JSON.generate(music_album_data)
+    end
   end
 end
