@@ -1,7 +1,10 @@
 require_relative 'game'
+require_relative 'author'
+require_relative 'author_manager'
 
 class GameManager
-  def initialize
+  def initialize(autor_manager)
+    @autor_manager = autor_manager
     @games = []
   end
 
@@ -11,8 +14,14 @@ class GameManager
     else
       puts 'List of all games:'
       @games.each_with_index do |game, index|
-        puts format_item(index, game, :title, :genre, :multiplayer, :last_played_at, :label)
+        puts format_item(index, game, :title, :author, :genre, :multiplayer, :last_played_at, :label)
       end
+    end
+  end
+
+  def list_authors
+    @autor_manager.authors.each_with_index do |author, index|
+      puts "#{index}) First Name: #{author.first_name}, Last Name: #{author.last_name}"
     end
   end
 
@@ -34,11 +43,11 @@ class GameManager
     label = gets.chomp
 
     # Create a new game and add it to the items list
-    game = Game.new(last_played)
+    game = Game.new(last_played, multiplayer)
     game.title = title
     game.author = Author.new(author_name, author_last_name)
+    @autor_manager.add_author(game.author)
     game.genre = genre
-    game.multiplayer = multiplayer
     game.label = label  ## Fix it
     @games << game
 
@@ -48,7 +57,13 @@ class GameManager
   end
 
   def format_item(index, item, *attributes)
-    formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
+    formatted_attrs = attributes.map do |attr|
+      if attr == :author
+        "Author: #{item.author.last_name} #{item.author.first_name}"
+      else
+        "#{attr.capitalize}: #{item.send(attr)}"
+      end
+    end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
 
