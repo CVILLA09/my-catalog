@@ -1,9 +1,10 @@
 require 'date'
+require_relative 'author'
 
 class Item
   ## Attributes
   attr_reader :id
-  attr_accessor :publish_date, :archived
+  attr_accessor :publish_date, :archived, :author
 
   def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
@@ -14,10 +15,6 @@ class Item
   # Custom setter methods
   def genre=(value)
     @genre = value.strip.capitalize
-  end
-
-  def author=(value)
-    @author = value.strip.capitalize
   end
 
   def label=(value)
