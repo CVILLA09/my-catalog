@@ -3,8 +3,8 @@ require_relative 'author'
 require_relative 'author_manager'
 
 class GameManager
-  def initialize(autor_manager)
-    @autor_manager = autor_manager
+  def initialize(author_manager)
+    @author_manager = author_manager
     @games = []
   end
 
@@ -20,13 +20,20 @@ class GameManager
   end
 
   def list_authors
-    @autor_manager.authors.each_with_index do |author, index|
+    @author_manager.authors.each_with_index do |author, index|
       puts "#{index}) First Name: #{author.first_name}, Last Name: #{author.last_name}"
     end
   end
 
   def add_game
     puts 'Enter the details for the game:'
+    game_details = game_details_input
+    game = create_game(game_details)
+    @games << game
+    display_game_info(game)
+  end
+
+  def game_details_input
     print 'Title: '
     title = gets.chomp
     print 'Author name: '
@@ -36,21 +43,27 @@ class GameManager
     print 'Genre: '
     genre = gets.chomp
     print 'Multiplayer?(Y/N): '
-    multiplayer = gets.chomp.upcase == 'Y' ? true : false
+    multiplayer = gets.chomp.upcase == 'Y'
     print 'Last played: '
     last_played = gets.chomp
     print 'Label: '
     label = gets.chomp
 
-    # Create a new game and add it to the items list
-    game = Game.new(last_played, multiplayer)
-    game.title = title
-    game.author = Author.new(author_name, author_last_name)
-    @autor_manager.add_author(game.author)
-    game.genre = genre
-    game.label = label  ## Fix it
-    @games << game
+    { title: title, author_name: author_name, author_last_name: author_last_name, genre: genre,
+      multiplayer: multiplayer, last_played: last_played, label: label }
+  end
 
+  def create_game(details)
+    game = Game.new(details[:last_played], details[:multiplayer])
+    game.title = details[:title]
+    game.author = Author.new(details[:author_name], details[:author_last_name])
+    @author_manager.add_author(game.author)
+    game.genre = details[:genre]
+    game.label = details[:label]
+    game
+  end
+
+  def display_game_info(game)
     puts 'Thanks! Your game has been created:'
     puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name}, Genre: #{game.genre}, " \
          "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Label: #{game.label}"
@@ -66,5 +79,4 @@ class GameManager
     end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
-
 end
