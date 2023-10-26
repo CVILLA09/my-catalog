@@ -1,8 +1,10 @@
 require_relative 'book'
+require_relative 'label'
 
 class BookManager
-  def initialize
+  def initialize(label_manager)
     @books = []
+    @label_manager = label_manager
   end
 
   def list_books
@@ -33,12 +35,18 @@ class BookManager
     print 'Label: '
     label = gets.chomp
   
+    # Create a new Label object
+    new_label = Label.new(label, 'red')
+
+    # Add the new Label to LabelManager
+    @label_manager.labels << new_label
+
     # Create a new book and add it to the books list
     book = Book.new(publish_date, title, publisher, cover_state, archived: false)
     book.author = author
     book.title = title
     book.genre = genre
-    book.label = label
+    book.label = new_label
     
     @books << book
   
