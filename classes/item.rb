@@ -24,9 +24,13 @@ class Item
     @label = value.strip.upcase
   end
 
+  def source=(value)
+    @source = value.strip.capitalize
+  end
+
   ## Methods
   def can_be_archived?
-    ## Should return true if published_date is older than 10 years
+    # Should return true if published_date is older than 10 years
     Date.today.year - @publish_date.year > 10
   end
 
