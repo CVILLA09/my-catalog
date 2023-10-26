@@ -1,3 +1,5 @@
+require_relative 'book'
+
 class BookManager
   def initialize
     @books = []
@@ -32,7 +34,7 @@ class BookManager
     label = gets.chomp
   
     # Create a new book and add it to the books list
-    book = Book.new(publish_date, publisher, cover_state, archived: false)
+    book = Book.new(publish_date, title, publisher, cover_state, archived: false)
     book.author = author
     book.title = title
     book.genre = genre
