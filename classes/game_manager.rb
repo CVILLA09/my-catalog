@@ -14,12 +14,12 @@ class GameManager
   end
 
   def load_games
-    return unless File.exist?('games.json')
+    return unless File.exist?('data/games.json')
 
-    if File.empty?('games.json')
+    if File.empty?('data/games.json')
       puts 'The file is empty'
     else
-      data = JSON.parse(File.read('games.json'))
+      data = JSON.parse(File.read('data/games.json'))
       data.each do |game_data|
         game = Game.new(game_data['last_played_at'], game_data['multiplayer'])
         game.title = game_data['title']
@@ -33,7 +33,7 @@ class GameManager
   end
 
   def save_games
-    File.write('games.json', JSON.pretty_generate(@games.map(&:to_json)))
+    File.write('data/games.json', JSON.pretty_generate(@games.map(&:to_json)))
   end
 
   def list_games

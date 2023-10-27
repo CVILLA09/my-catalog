@@ -1,6 +1,6 @@
 [
   {
-    "id": 563,
+    "id": 219,
     "title": "titulo Prueba",
     "last_played_at": "2020/02/02",
     "multiplayer": false,
@@ -8,14 +8,14 @@
     "label": "red",
     "source": null,
     "author": {
-      "id": 643,
+      "id": 587,
       "first_name": "steam",
       "last_name": "valve",
       "category": "Games"
     }
   },
   {
-    "id": 244,
+    "id": 353,
     "title": "Age of Empires",
     "last_played_at": "2020/01/01",
     "multiplayer": true,
@@ -23,8 +23,23 @@
     "label": "war",
     "source": null,
     "author": {
-      "id": 796,
+      "id": 233,
       "first_name": "Microsoft",
+      "last_name": "",
+      "category": "Games"
+    }
+  },
+  {
+    "id": 950,
+    "title": "Valorant",
+    "last_played_at": "2020/02/03",
+    "multiplayer": true,
+    "genre": "Shooter",
+    "label": "Title: online sports, Color: blue",
+    "source": null,
+    "author": {
+      "id": 461,
+      "first_name": null,
       "last_name": "",
       "category": "Games"
     }
