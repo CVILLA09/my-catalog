@@ -2,27 +2,18 @@ require_relative 'classes/item'
 require_relative 'classes/book_manager'
 require_relative 'classes/music_album_manager'
 require_relative 'classes/game_manager'
-<<<<<<< HEAD
 require_relative 'classes/label_manager'
 require_relative 'classes/author_manager'
-=======
 require_relative 'classes/genre_manager'
->>>>>>> b715eccd86a6133bf295e70114683063808969f4
 
 class ConsoleApp
   def initialize
     @label_manager = LabelManager.new
     @book_manager = BookManager.new(@label_manager)
     @music_album_manager = MusicAlbumManager.new
-<<<<<<< HEAD
     @author_manager = AuthorManager.new
     @game_manager = GameManager.new(@author_manager)
-    @genres = []
-=======
-    @game_manager = GameManager.new
     @genres = GenreManager.new
->>>>>>> b715eccd86a6133bf295e70114683063808969f4
-    @labels = []
   end
 
   def run

@@ -34,17 +34,16 @@ class MusicAlbumManager
     on_spotify = gets.chomp.downcase == 'y'
     print 'Label: '
     label = gets.chomp
-  
-    music_album = MusicAlbum.new(album, artist, genre, on_spotify, label, publish_date) # Pass publish_date to the constructor
+
+    music_album = MusicAlbum.new(album, artist, genre, on_spotify, label, publish_date)
     @albums << music_album
-  
+
     puts 'Thanks! Your music album has been created:'
     puts "0) Album: #{music_album.album}, Artist: #{music_album.artist}, Genre: #{music_album.genre}, " \
          "Publish Date: #{music_album.publish_date}, On_Spotify: #{music_album.on_spotify}, Label: #{music_album.label}"
-  
+
     save_music_albums
   end
-  
 
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
@@ -53,7 +52,7 @@ class MusicAlbumManager
 
   def load_music_albums
     return unless File.exist?('music_albums.json')
-  
+
     music_album_data = JSON.parse(File.read('music_albums.json'))
     music_album_data.each do |album_data|
       if album_data['publish_date'].nil?
@@ -61,7 +60,7 @@ class MusicAlbumManager
         puts "Warning: 'publish_date' is missing for an album."
         next # Skip this album and continue with the next one
       end
-  
+
       music_album = MusicAlbum.new(
         album_data['album'],
         album_data['artist'],
@@ -73,9 +72,9 @@ class MusicAlbumManager
       @albums << music_album
     end
   end
-  
-  
+
   def save_music_albums
+    # puts "Hello"
     music_album_data = @albums.map do |album|
       {
         'album' => album.album,
@@ -86,8 +85,8 @@ class MusicAlbumManager
       }
     end
 
-    File.open('music_albums.json', 'w') do |file| 
-      file.puts JSON.generate(music_album_data)
+    File.open('./classes/music_albums.json', 'w') do |file|
+      file.write(music_album_data.to_json)
     end
   end
 end
