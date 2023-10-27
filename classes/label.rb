@@ -15,5 +15,5 @@ class Label
     @items << item
     item.label = self
     @category = category
-  end  
+  end
 end

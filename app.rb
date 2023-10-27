@@ -143,7 +143,7 @@ class ConsoleApp
     else
       puts 'Invalid choice'
     end
-  end  
+  end
 
   def list_authors
     puts 'Select category for authors:'

@@ -7,7 +7,7 @@ class GameManager
     @author_manager = author_manager
     @label_manager = label_manager
     @games = []
-  end  
+  end
 
   def list_games
     if @games.empty?
@@ -49,10 +49,10 @@ class GameManager
     last_played = gets.chomp
     print 'Label: '
     label = gets.chomp
-  
+
     { title: title, author_first_name: author_first_name, author_last_name: author_last_name, genre: genre,
       multiplayer: multiplayer, last_played: last_played, label: label }
-  end  
+  end
 
   def create_game(details)
     game = Game.new(details[:last_played], details[:multiplayer])
@@ -60,10 +60,10 @@ class GameManager
     game.author = Author.new(details[:author_name], details[:author_last_name])
     @author_manager.add_author(game.author, 'Games')
     game.genre = details[:genre]
-  
+
     # Check if label already exists or create a new one
     existing_label = @label_manager.labels.find { |label| label.title.downcase == details[:label].downcase }
-    
+
     if existing_label.nil?
       new_label = Label.new(details[:label], 'blue')
       new_label.category = 'Games'
@@ -72,9 +72,9 @@ class GameManager
     else
       game.label = existing_label
     end
-  
+
     game
-  end  
+  end
 
   def display_game_info(game)
     puts 'Thanks! Your game has been created:'
