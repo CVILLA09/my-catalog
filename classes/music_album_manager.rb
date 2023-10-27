@@ -56,7 +56,19 @@ class MusicAlbumManager
   end
 
   def format_item(index, item, *attributes)
-    formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
+    formatted_attrs = attributes.map do |attr|
+      value = item.send(attr)
+      case attr
+      when :genre
+        "Genre: #{value.name if value.is_a?(Genre)}"
+      when :author
+        "Author: #{value.first_name} #{value.last_name if value.is_a?(Author)}"
+      when :label
+        "Label: #{value.title if value.is_a?(Label)}"
+      else
+        "#{attr.capitalize}: #{value}"
+      end
+    end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
 

@@ -28,15 +28,15 @@ class GenreManager
   end
 
   def find_or_create_genre(name, category)
-    existing_genre = @genres.find { |genre| genre.name.downcase == name.downcase && genre.category.downcase == category.downcase }
-    if existing_genre
-      return existing_genre
-    else
-      new_genre = Genre.new(name, category)
-      @genres << new_genre
-      save_genres
-      return new_genre
+    existing_genre = @genres.find do |genre|
+      genre.name.downcase == name.downcase && genre.category.downcase == category.downcase
     end
+    return existing_genre if existing_genre
+
+    new_genre = Genre.new(name, category)
+    @genres << new_genre
+    save_genres
+    new_genre
   end
 
   def load_genres

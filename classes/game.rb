@@ -25,7 +25,6 @@ class Game < Item
     value.category = 'Games'
     @label = value
   end
-  
 
   def can_be_archived?
     Date.today.year - @last_played_at.year > 2 && super
@@ -41,7 +40,7 @@ class Game < Item
       title: @title,
       last_played_at: @last_played_at.to_s.gsub('-', '/'),
       multiplayer: @multiplayer,
-      genre: @genre,
+      genre: @genre.to_json,
       label: @label.to_json,
       source: @source,
       author: @author.to_json

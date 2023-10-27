@@ -59,7 +59,8 @@ class BookManager
       label_for_book = existing_label
     end
 
-    book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state], archived: false)
+    book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state],
+                    archived: false)
     author_first_name, author_last_name = attributes[:author].split
     author = Author.new(author_first_name, author_last_name)
     @author_manager.add_author(author, 'Books')
@@ -78,7 +79,19 @@ class BookManager
   end
 
   def format_item(index, item, *attributes)
-    formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
+    formatted_attrs = attributes.map do |attr|
+      value = item.send(attr)
+      case attr
+      when :genre
+        "Genre: #{value.name if value.is_a?(Genre)}"
+      when :author
+        "Author: #{value.first_name} #{value.last_name if value.is_a?(Author)}"
+      when :label
+        "Label: #{value.title if value.is_a?(Label)}"
+      else
+        "#{attr.capitalize}: #{value}"
+      end
+    end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
 
@@ -92,7 +105,8 @@ class BookManager
     json_data = File.read('data/books.json')
     array_of_hashes = JSON.parse(json_data)
     @books = array_of_hashes.map do |book_hash|
-      book = Book.new(book_hash['publish_date'], book_hash['title'], book_hash['publisher'], book_hash['cover_state'], archived: book_hash['archived'])
+      book = Book.new(book_hash['publish_date'], book_hash['title'], book_hash['publisher'], book_hash['cover_state'],
+                      archived: book_hash['archived'])
       author = Author.new(book_hash['author_first_name'], book_hash['author_last_name'])
       @author_manager.add_author(author, 'Books')
       book.author = author
