@@ -17,8 +17,12 @@ class Item
 
   # Custom setter methods
   def genre=(value)
-    @genre = value.strip.capitalize
-  end
+    if value.is_a?(Genre)
+      @genre = value
+    else
+      @genre = value.strip.capitalize
+    end
+  end  
 
   def label=(value)
     @label = if value.is_a?(Label)

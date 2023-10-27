@@ -108,6 +108,7 @@ class ConsoleApp
     puts '2 - Music Albums'
     puts '3 - Games'
     category_choice = gets.chomp.to_i
+  
     case category_choice
     when 1
       display_genres(@genre_manager.genres.select { |genre| genre.category == 'Books' })
@@ -119,7 +120,7 @@ class ConsoleApp
       puts 'Invalid category choice.'
     end
   end
-
+  
   def display_genres(genres)
     if genres.empty?
       puts 'No genres found for this category.'

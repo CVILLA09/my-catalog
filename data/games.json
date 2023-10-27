@@ -1,10 +1,10 @@
 [
   {
-    "id": 50,
+    "id": 55,
     "title": "Valorant",
     "last_played_at": "2020/01/02",
     "multiplayer": true,
-    "genre": "Strategy",
+    "genre": "#<Genre:0x00007f841789a6c8>",
     "label": {
       "title": "Online Games",
       "color": "red",
@@ -12,9 +12,28 @@
     },
     "source": null,
     "author": {
-      "id": 892,
+      "id": 256,
       "first_name": null,
       "last_name": "",
+      "category": "Games"
+    }
+  },
+  {
+    "id": 122,
+    "title": "Mario Bros",
+    "last_played_at": "2000/10/23",
+    "multiplayer": false,
+    "genre": "#<Genre:0x00007f8417899980>",
+    "label": {
+      "title": "Nintendo Classics",
+      "color": "red",
+      "category": "Games"
+    },
+    "source": null,
+    "author": {
+      "id": 199,
+      "first_name": null,
+      "last_name": "Mayamoto",
       "category": "Games"
     }
   }

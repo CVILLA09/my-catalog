@@ -1,5 +1,6 @@
 require 'json'
 require_relative 'music_album'
+
 class MusicAlbumManager
   attr_reader :albums
 
@@ -36,10 +37,14 @@ class MusicAlbumManager
     on_spotify = gets.chomp.downcase == 'y'
     print 'Label: '
     label_title = gets.chomp
+
+    # Handle Genre
+    genre_obj = @genre_manager.find_or_create_genre(genre, 'Music Albums')
+
     attributes = {
       album: album,
       artist: artist,
-      genre: genre,
+      genre: genre_obj,
       on_spotify: on_spotify,
       label: Label.new(label_title, 'green'),
       publish_date: publish_date
@@ -79,16 +84,19 @@ class MusicAlbumManager
       puts "Warning: 'publish_date' is missing for an album."
       return
     end
+
+    # Handle Genre
+    genre = @genre_manager.find_or_create_genre(album_data['genre'], 'Music Albums')
+
     attributes = {
       album: album_data['album'],
       artist: album_data['artist'],
-      genre: album_data['genre'],
+      genre: genre,
       on_spotify: album_data['on_spotify'],
-      label: album_data['label'],
+      label: Label.new(album_data['label'], 'green'),
       publish_date: album_data['publish_date']
     }
     music_album = MusicAlbum.new(attributes)
-
     @albums << music_album
   end
 
@@ -101,9 +109,9 @@ class MusicAlbumManager
       {
         'album' => album.album,
         'artist' => album.artist,
-        'genre' => album.genre,
+        'genre' => album.genre.name,
         'on_spotify' => album.on_spotify,
-        'label' => album.label,
+        'label' => album.label.title,
         'publish_date' => album.publish_date
       }
     end

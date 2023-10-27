@@ -29,7 +29,11 @@ class GameManager
         game.title = game_data['title']
         game.author = Author.new(game_data['author']['first_name'], game_data['author']['last_name'])
         @author_manager.add_author(game.author, 'Games')
-        game.genre = game_data['genre']
+
+        # Handle Genre
+        genre = @genre_manager.find_or_create_genre(game_data['genre'], 'Games')
+        game.genre = genre
+
         game.label = Label.new(game_data['label']['title'], game_data['label']['color'])
         game.label.category = 'Games'
         @label_manager.labels << game.label
@@ -50,12 +54,6 @@ class GameManager
       @games.each_with_index do |game, index|
         puts format_item(index, game, :title, :author, :genre, :multiplayer, :last_played_at, :label)
       end
-    end
-  end
-
-  def list_authors
-    @author_manager.authors.each_with_index do |author, index|
-      puts "#{index}) First Name: #{author.first_name}, Last Name: #{author.last_name}"
     end
   end
 
@@ -90,10 +88,15 @@ class GameManager
   def create_game(details)
     game = Game.new(details[:last_played], details[:multiplayer])
     game.title = details[:title]
-    game.author = Author.new(details[:author_name], details[:author_last_name])
+    game.author = Author.new(details[:author_first_name], details[:author_last_name]) # Fix the key
     @author_manager.add_author(game.author, 'Games')
-    game.genre = details[:genre]
+
+    # Handle Genre
+    genre = @genre_manager.find_or_create_genre(details[:genre], 'Games')
+    game.genre = genre
+
     game.label = Label.new(details[:label], 'red')
+    game.label.category = 'Games'
     @label_manager.labels << game.label
 
     game
@@ -101,7 +104,7 @@ class GameManager
 
   def display_game_info(game)
     puts 'Thanks! Your game has been created:'
-    puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name}, Genre: #{game.genre}, " \
+    puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name}, Genre: #{game.genre.name}, " \
          "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Label: #{game.label.title}"
   end
 
