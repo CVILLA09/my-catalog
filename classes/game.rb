@@ -5,7 +5,7 @@ class Game < Item
   attr_accessor :last_played_at, :title, :multiplayer, :genre, :label, :source
   attr_reader :author
 
-  def initialize(last_played_at, multiplayer, id: nil)
+  def initialize(last_played_at, multiplayer)
     super(last_played_at)
     @last_played_at = Date.strptime(last_played_at, '%Y/%m/%d')
     @multiplayer = multiplayer
@@ -26,20 +26,16 @@ class Game < Item
     @archived = true if can_be_archived?
   end
 
-  def to_json
-
+  def to_json(*_args)
     {
-        id: @id,
-        title: @title,
-        last_played_at: @last_played_at.to_s.gsub('-','/'),
-        multiplayer: @multiplayer,
-        genre: @genre,
-        label: @label,
-        source: @source,
-        author: @author.to_json
+      id: @id,
+      title: @title,
+      last_played_at: @last_played_at.to_s.gsub('-', '/'),
+      multiplayer: @multiplayer,
+      genre: @genre,
+      label: @label,
+      source: @source,
+      author: @author.to_json
     }
-
   end
-
 end
-
