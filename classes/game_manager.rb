@@ -1,14 +1,18 @@
 require_relative 'game'
 require_relative 'author'
+require_relative 'label'
 require_relative 'author_manager'
+require_relative 'label_manager'
+require_relative 'genre_manager'
 require 'json'
 
 class GameManager
   attr_accessor :games
 
-  def initialize(author_manager, label_manager)
+  def initialize(label_manager, author_manager, genre_manager)
     @author_manager = author_manager
     @label_manager = label_manager
+    @genre_manager = genre_manager
     @games = []
     load_games
   end
@@ -26,7 +30,9 @@ class GameManager
         game.author = Author.new(game_data['author']['first_name'], game_data['author']['last_name'])
         @author_manager.add_author(game.author, 'Games')
         game.genre = game_data['genre']
-        game.label = game_data['label']
+        game.label = Label.new(game_data['label']['title'], game_data['label']['color'])
+        game.label.category = 'Games'
+        @label_manager.labels << game.label
         @games << game
       end
     end
@@ -87,18 +93,8 @@ class GameManager
     game.author = Author.new(details[:author_name], details[:author_last_name])
     @author_manager.add_author(game.author, 'Games')
     game.genre = details[:genre]
-
-    # Check if label already exists or create a new one
-    existing_label = @label_manager.labels.find { |label| label.title.downcase == details[:label].downcase }
-
-    if existing_label.nil?
-      new_label = Label.new(details[:label], 'blue')
-      new_label.category = 'Games'
-      @label_manager.labels << new_label
-      game.label = new_label
-    else
-      game.label = existing_label
-    end
+    game.label = Label.new(details[:label], 'red')
+    @label_manager.labels << game.label
 
     game
   end
@@ -106,7 +102,7 @@ class GameManager
   def display_game_info(game)
     puts 'Thanks! Your game has been created:'
     puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name}, Genre: #{game.genre}, " \
-         "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Label: #{game.label}"
+         "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Label: #{game.label.title}"
   end
 
   def format_item(index, item, *attributes)

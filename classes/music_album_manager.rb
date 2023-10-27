@@ -3,7 +3,10 @@ require_relative 'music_album'
 class MusicAlbumManager
   attr_reader :albums
 
-  def initialize
+  def initialize(label_manager, author_manager, genre_manager)
+    @label_manager = label_manager
+    @author_manager = author_manager
+    @genre_manager = genre_manager
     @albums = []
     load_music_albums
   end
@@ -32,13 +35,13 @@ class MusicAlbumManager
     print 'On Spotify?(Y/N): '
     on_spotify = gets.chomp.downcase == 'y'
     print 'Label: '
-    label = gets.chomp
+    label_title = gets.chomp
     attributes = {
       album: album,
       artist: artist,
       genre: genre,
       on_spotify: on_spotify,
-      label: label,
+      label: Label.new(label_title, 'green'),
       publish_date: publish_date
     }
     music_album = MusicAlbum.new(attributes)

@@ -2,12 +2,14 @@ require_relative 'book'
 require_relative 'label'
 require_relative 'author'
 require_relative 'author_manager'
+require_relative 'label_manager'
 require 'json'
 
 class BookManager
-  def initialize(label_manager, author_manager)
+  def initialize(label_manager, author_manager, genre_manager)
     @label_manager = label_manager
     @author_manager = author_manager
+    @genre_manager = genre_manager
     @books = []
     load_books_from_json
   end
