@@ -82,4 +82,14 @@ class BookManager
       f.write(JSON.pretty_generate(@books.map(&:to_h)))
     end
   end  
+
+  def load_books_from_json
+    if File.exist?('data/books.json')
+      json_data = File.read('data/books.json')
+      array_of_hashes = JSON.parse(json_data)
+      @books = array_of_hashes.map do |book_hash|
+        Book.new(book_hash)
+      end
+    end
+  end  
 end
