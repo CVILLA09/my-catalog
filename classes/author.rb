@@ -15,6 +15,10 @@ class Author
     item.author = self
   end
 
+  def to_s
+    "#{first_name} #{last_name}"
+  end
+
   def to_json(*_args)
     {
       id: @id,
