@@ -8,7 +8,11 @@ class Item
 
   def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
-    @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
+    begin
+      @publish_date = Date.parse(publish_date)
+    rescue ArgumentError => e
+      puts "Invalid date format for #{publish_date}: #{e.message}"
+    end
     @archived = archived
   end
 
