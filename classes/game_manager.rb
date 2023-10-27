@@ -3,8 +3,9 @@ require_relative 'author'
 require_relative 'author_manager'
 
 class GameManager
-  def initialize(author_manager)
+  def initialize(author_manager, label_manager)
     @author_manager = author_manager
+    @label_manager = label_manager
     @games = []
   end
 
@@ -36,9 +37,9 @@ class GameManager
   def game_details_input
     print 'Title: '
     title = gets.chomp
-    print 'Author name: '
-    author_name = gets.chomp
-    print 'Author last name: '
+    print 'Author First Name: '
+    author_first_name = gets.chomp
+    print 'Author Last Name: '
     author_last_name = gets.chomp
     print 'Genre: '
     genre = gets.chomp
@@ -49,7 +50,7 @@ class GameManager
     print 'Label: '
     label = gets.chomp
 
-    { title: title, author_name: author_name, author_last_name: author_last_name, genre: genre,
+    { title: title, author_first_name: author_first_name, author_last_name: author_last_name, genre: genre,
       multiplayer: multiplayer, last_played: last_played, label: label }
   end
 
@@ -57,9 +58,21 @@ class GameManager
     game = Game.new(details[:last_played], details[:multiplayer])
     game.title = details[:title]
     game.author = Author.new(details[:author_name], details[:author_last_name])
-    @author_manager.add_author(game.author)
+    @author_manager.add_author(game.author, 'Games')
     game.genre = details[:genre]
-    game.label = details[:label]
+
+    # Check if label already exists or create a new one
+    existing_label = @label_manager.labels.find { |label| label.title.downcase == details[:label].downcase }
+
+    if existing_label.nil?
+      new_label = Label.new(details[:label], 'blue')
+      new_label.category = 'Games'
+      @label_manager.labels << new_label
+      game.label = new_label
+    else
+      game.label = existing_label
+    end
+
     game
   end
 

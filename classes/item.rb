@@ -7,15 +7,11 @@ class Item
 
   def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
-
     begin
-      @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
+      @publish_date = Date.parse(publish_date)
     rescue ArgumentError => e
-      # Handle the error, for example, by setting publish_date to a default value or re-raising the exception.
-      puts "Error parsing publish_date: #{e.message}"
-      @publish_date = Date.today # Set it to the current date as a default.
+      puts "Invalid date format for #{publish_date}: #{e.message}"
     end
-
     @archived = archived
   end
 

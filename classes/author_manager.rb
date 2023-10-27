@@ -4,13 +4,13 @@ class AuthorManager
   attr_accessor :authors
 
   def initialize
-    @authors = [] # Inicializa @authors como un Array vacío
+    @authors = []
   end
 
-  def add_author(author)
+  def add_author(author, category)
     raise 'Invalid author' unless author.is_a?(Author)
 
-    author.category = 'Games'
+    author.category = category
     @authors << author
   end
 
