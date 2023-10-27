@@ -26,12 +26,19 @@ class BookManager
   def collect_user_input
     puts 'Enter the details for the book:'
     attributes = {}
-    %w[Author Title Publisher Publish_Date Genre Cover_State Label].each do |field|
+    print 'Title: '
+    attributes[:title] = gets.chomp
+    print 'Author First Name: '
+    author_first_name = gets.chomp.strip
+    print 'Author Last Name: '
+    author_last_name = gets.chomp.strip
+    attributes[:author] = "#{author_first_name} #{author_last_name}"
+    %w[Publisher Publish_Date Genre Cover_State Label].each do |field|
       print "#{field}: "
       attributes[field.downcase.to_sym] = gets.chomp
     end
     attributes
-  end
+  end  
 
   def create_and_add_book(attributes)
     new_label = Label.new(attributes[:label], 'red')
