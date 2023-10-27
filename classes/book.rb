@@ -14,4 +14,19 @@ class Book < Item
   def can_be_archived?
     super || @cover_state == 'bad'
   end
+
+  def to_h
+    {
+      'author_first_name' => @author.first_name,
+      'author_last_name' => @author.last_name,
+      'title' => @title,
+      'publisher' => @publisher,
+      'publish_date' => @publish_date,
+      'genre' => @genre,
+      'cover_state' => @cover_state,
+      'label_title' => @label.title,
+      'label_color' => @label.color,
+      'archived' => @archived
+    }
+  end  
 end
