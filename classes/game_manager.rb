@@ -4,7 +4,6 @@ require_relative 'author_manager'
 require 'json'
 
 class GameManager
-
   attr_accessor :games
 
   def initialize(author_manager, label_manager)
