@@ -1,5 +1,5 @@
 class Label
-  attr_accessor :title, :color
+  attr_accessor :title, :color, :category
 
   def initialize(title, color)
     @title = title
@@ -11,8 +11,9 @@ class Label
     "Title: #{@title}, Color: #{@color}"
   end
 
-  def add_item(item)
+  def add_item(item, category)
     @items << item
     item.label = self
-  end
+    @category = category
+  end  
 end

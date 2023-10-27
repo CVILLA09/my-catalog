@@ -4,7 +4,7 @@ class AuthorManager
   attr_accessor :authors
 
   def initialize
-    @authors = [] # Inicializa @authors como un Array vacío
+    @authors = []
   end
 
   def add_author(author)

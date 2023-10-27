@@ -128,13 +128,22 @@ class ConsoleApp
   end
 
   def list_labels
-    if @label_manager.labels.empty?
-      puts 'There are no labels yet!'
+    puts 'Select category for labels:'
+    puts '1 - Books'
+    puts '2 - Music Albums'
+    puts '3 - Games'
+    choice = gets.chomp.to_i
+    case choice
+    when 1
+      @label_manager.list_labels_by_category('Books')
+    when 2
+      @label_manager.list_labels_by_category('Music Albums')
+    when 3
+      @label_manager.list_labels_by_category('Games')
     else
-      puts 'List of all labels:'
-      @label_manager.list_labels
+      puts 'Invalid choice'
     end
-  end
+  end  
 
   def list_authors
     puts 'Select category for authors:'
