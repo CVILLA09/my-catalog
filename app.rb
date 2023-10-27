@@ -8,10 +8,10 @@ require_relative 'classes/author_manager'
 class ConsoleApp
   def initialize
     @label_manager = LabelManager.new
-    @book_manager = BookManager.new(@label_manager)
-    @music_album_manager = MusicAlbumManager.new
     @author_manager = AuthorManager.new
-    @game_manager = GameManager.new(@author_manager)
+    @book_manager = BookManager.new(@label_manager, @author_manager)
+    @music_album_manager = MusicAlbumManager.new
+    @game_manager = GameManager.new(@author_manager, @label_manager)
     @genres = []
     @labels = []
   end
@@ -128,11 +128,20 @@ class ConsoleApp
   end
 
   def list_labels
-    if @label_manager.labels.empty?
-      puts 'There are no labels yet!'
+    puts 'Select category for labels:'
+    puts '1 - Books'
+    puts '2 - Music Albums'
+    puts '3 - Games'
+    choice = gets.chomp.to_i
+    case choice
+    when 1
+      @label_manager.list_labels_by_category('Books')
+    when 2
+      @label_manager.list_labels_by_category('Music Albums')
+    when 3
+      @label_manager.list_labels_by_category('Games')
     else
-      puts 'List of all labels:'
-      @label_manager.list_labels
+      puts 'Invalid choice'
     end
   end
 
@@ -145,7 +154,7 @@ class ConsoleApp
 
     case category_choice
     when 1
-      display_authors(@authors.select { |author| author.category == 'Books' })
+      display_authors(@author_manager.authors.select { |author| author.category == 'Books' })
     when 2
       display_authors(@authors.select { |author| author.category == 'Music Albums' })
     when 3
