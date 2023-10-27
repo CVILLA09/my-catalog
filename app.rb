@@ -11,7 +11,7 @@ class ConsoleApp
     @book_manager = BookManager.new(@label_manager)
     @music_album_manager = MusicAlbumManager.new
     @author_manager = AuthorManager.new
-    @game_manager = GameManager.new(@author_manager)
+    @game_manager = GameManager.new(@author_manager, @label_manager)
     @genres = []
     @labels = []
   end

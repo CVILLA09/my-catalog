@@ -3,10 +3,11 @@ require_relative 'author'
 require_relative 'author_manager'
 
 class GameManager
-  def initialize(author_manager)
+  def initialize(author_manager, label_manager)
     @author_manager = author_manager
+    @label_manager = label_manager
     @games = []
-  end
+  end  
 
   def list_games
     if @games.empty?
@@ -59,9 +60,21 @@ class GameManager
     game.author = Author.new(details[:author_name], details[:author_last_name])
     @author_manager.add_author(game.author)
     game.genre = details[:genre]
-    game.label = details[:label]
+  
+    # Check if label already exists or create a new one
+    existing_label = @label_manager.labels.find { |label| label.title.downcase == details[:label].downcase }
+    
+    if existing_label.nil?
+      new_label = Label.new(details[:label], 'blue')
+      new_label.category = 'Games'
+      @label_manager.labels << new_label
+      game.label = new_label
+    else
+      game.label = existing_label
+    end
+  
     game
-  end
+  end  
 
   def display_game_info(game)
     puts 'Thanks! Your game has been created:'
