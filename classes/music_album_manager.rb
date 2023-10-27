@@ -1,6 +1,5 @@
 require 'json'
 require_relative 'music_album'
-
 class MusicAlbumManager
   attr_reader :albums
 
@@ -34,15 +33,18 @@ class MusicAlbumManager
     on_spotify = gets.chomp.downcase == 'y'
     print 'Label: '
     label = gets.chomp
-
-    music_album = MusicAlbum.new(album, artist, genre, on_spotify, label, publish_date)
+    attributes = {
+      album: album,
+      artist: artist,
+      genre: genre,
+      on_spotify: on_spotify,
+      label: label,
+      publish_date: publish_date
+    }
+    music_album = MusicAlbum.new(attributes)
     @albums << music_album
-
     puts 'Thanks! Your music album has been created:'
-    puts "Album: #{music_album.album}, Artist: #{music_album.artist}, Genre: #{music_album.genre}, " \
-         "Publish Date: #{music_album.publish_date}, On Spotify: #{music_album.on_spotify}, Label: #{music_album.label}"
-
-    # Do not save here, instead, save when the user explicitly requests to save or on program exit
+    puts format_item(@albums.size - 1, music_album, :album, :artist, :genre, :publish_date, :on_spotify, :label)
   end
 
   def format_item(index, item, *attributes)
@@ -51,11 +53,10 @@ class MusicAlbumManager
   end
 
   def load_music_albums
-    return unless File.exist?('./classes/music_albums.json')
+    return unless File.exist?('./data/music_albums.json')
 
     begin
-      music_album_data = JSON.parse(File.read('./classes/music_albums.json'))
-
+      music_album_data = JSON.parse(File.read('./data/music_albums.json'))
       if music_album_data.is_a?(Array)
         music_album_data.each do |album_data|
           load_single_music_album(album_data)
@@ -75,15 +76,16 @@ class MusicAlbumManager
       puts "Warning: 'publish_date' is missing for an album."
       return
     end
+    attributes = {
+      album: album_data['album'],
+      artist: album_data['artist'],
+      genre: album_data['genre'],
+      on_spotify: album_data['on_spotify'],
+      label: album_data['label'],
+      publish_date: album_data['publish_date']
+    }
+    music_album = MusicAlbum.new(attributes)
 
-    music_album = MusicAlbum.new(
-      album_data['album'],
-      album_data['artist'],
-      album_data['genre'],
-      album_data['on_spotify'],
-      album_data['label'],
-      album_data['publish_date']
-    )
     @albums << music_album
   end
 
@@ -92,7 +94,6 @@ class MusicAlbumManager
       puts 'No music albums to save.'
       return
     end
-
     music_album_data = @albums.map do |album|
       {
         'album' => album.album,
@@ -103,8 +104,7 @@ class MusicAlbumManager
         'publish_date' => album.publish_date
       }
     end
-
-    File.write('./classes/music_albums.json', music_album_data.to_json)
+    File.write('./data/music_albums.json', music_album_data.to_json)
     puts 'Music albums saved successfully.'
   end
 end
