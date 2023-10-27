@@ -2,6 +2,7 @@ require_relative 'book'
 require_relative 'label'
 require_relative 'author'
 require_relative 'author_manager'
+require 'json'
 
 class BookManager
   def initialize(label_manager, author_manager)
@@ -75,4 +76,10 @@ class BookManager
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
     "#{index}) #{formatted_attrs}"
   end
+
+  def save_books_to_json
+    File.open('data/books.json', 'w') do |f|
+      f.write(JSON.pretty_generate(@books.map(&:to_h)))
+    end
+  end  
 end
