@@ -14,7 +14,7 @@ class Item
       puts "Invalid date format for #{publish_date}: #{e.message}"
     end
     @archived = archived
-  end  
+  end
 
   # Custom setter methods
   def genre=(value)

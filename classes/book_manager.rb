@@ -10,7 +10,7 @@ class BookManager
     @author_manager = author_manager
     @books = []
     load_books_from_json
-  end  
+  end
 
   def list_books
     if @books.empty?
@@ -82,35 +82,36 @@ class BookManager
   end
 
   def save_books_to_json
-    File.open('data/books.json', 'w') do |f|
-      f.write(JSON.pretty_generate(@books.map(&:to_h)))
-    end
-  end  
+    File.write('data/books.json', JSON.pretty_generate(@books.map(&:to_h)))
+  end
 
   def load_books_from_json
-    if File.exist?('data/books.json')
-      json_data = File.read('data/books.json')
-      array_of_hashes = JSON.parse(json_data)
-      @books = array_of_hashes.map do |book_hash|
-        book = Book.new(book_hash['publish_date'], book_hash['title'], book_hash['publisher'], book_hash['cover_state'], archived: book_hash['archived'])
-        
-        author = Author.new(book_hash['author_first_name'], book_hash['author_last_name'])
-        @author_manager.add_author(author, 'Books')
-        book.author = author
-        
-        existing_label = @label_manager.labels.find { |label| label.title.downcase == book_hash['label_title'].downcase }
-        if existing_label.nil?
-          new_label = Label.new(book_hash['label_title'], book_hash['label_color'])
-          new_label.category = 'Books'
-          @label_manager.labels << new_label
-          book.label = new_label
-        else
-          book.label = existing_label
-        end
-        
-        book.genre = book_hash['genre']
-        book
+    return unless File.exist?('data/books.json')
+
+    json_data = File.read('data/books.json')
+    array_of_hashes = JSON.parse(json_data)
+    @books = array_of_hashes.map do |book_hash|
+      book = Book.new(book_hash['publish_date'], book_hash['title'], book_hash['publisher'],
+                      book_hash['cover_state'], archived: book_hash['archived'])
+
+      author = Author.new(book_hash['author_first_name'], book_hash['author_last_name'])
+      @author_manager.add_author(author, 'Books')
+      book.author = author
+
+      existing_label = @label_manager.labels.find do |label|
+        label.title.downcase == book_hash['label_title'].downcase
       end
+      if existing_label.nil?
+        new_label = Label.new(book_hash['label_title'], book_hash['label_color'])
+        new_label.category = 'Books'
+        @label_manager.labels << new_label
+        book.label = new_label
+      else
+        book.label = existing_label
+      end
+
+      book.genre = book_hash['genre']
+      book
     end
-  end  
+  end
 end

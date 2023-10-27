@@ -28,5 +28,5 @@ class Book < Item
       'label_color' => @label.color,
       'archived' => @archived
     }
-  end  
+  end
 end
