@@ -37,9 +37,9 @@ class GameManager
   def game_details_input
     print 'Title: '
     title = gets.chomp
-    print 'Author name: '
-    author_name = gets.chomp
-    print 'Author last name: '
+    print 'Author First Name: '
+    author_first_name = gets.chomp
+    print 'Author Last Name: '
     author_last_name = gets.chomp
     print 'Genre: '
     genre = gets.chomp
@@ -49,10 +49,10 @@ class GameManager
     last_played = gets.chomp
     print 'Label: '
     label = gets.chomp
-
-    { title: title, author_name: author_name, author_last_name: author_last_name, genre: genre,
+  
+    { title: title, author_first_name: author_first_name, author_last_name: author_last_name, genre: genre,
       multiplayer: multiplayer, last_played: last_played, label: label }
-  end
+  end  
 
   def create_game(details)
     game = Game.new(details[:last_played], details[:multiplayer])
