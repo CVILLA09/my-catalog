@@ -4,6 +4,7 @@ require_relative 'classes/music_album_manager'
 require_relative 'classes/game_manager'
 require_relative 'classes/label_manager'
 require_relative 'classes/author_manager'
+require_relative 'classes/genre_manager'
 
 class ConsoleApp
   def initialize
@@ -73,6 +74,7 @@ class ConsoleApp
 
   def exit_app
     puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
+    @music_album_manager.save_music_albums
     exit
   end
 
