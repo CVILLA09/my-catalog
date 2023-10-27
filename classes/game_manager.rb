@@ -4,10 +4,10 @@ require_relative 'author_manager'
 require 'json'
 
 class GameManager
-  def initialize(author_manager, label_manager)
+
   attr_accessor :games
 
-  def initialize(author_manager)
+  def initialize(author_manager, label_manager)
     @author_manager = author_manager
     @label_manager = label_manager
     @games = []
@@ -25,7 +25,7 @@ class GameManager
         game = Game.new(game_data['last_played_at'], game_data['multiplayer'])
         game.title = game_data['title']
         game.author = Author.new(game_data['author']['first_name'], game_data['author']['last_name'])
-        @author_manager.add_author(game.author)
+        @author_manager.add_author(game.author, 'Games')
         game.genre = game_data['genre']
         game.label = game_data['label']
         @games << game
