@@ -41,21 +41,29 @@ class BookManager
   end  
 
   def create_and_add_book(attributes)
-    new_label = Label.new(attributes[:label], 'red')
-    @label_manager.labels << new_label
-
+    existing_label = @label_manager.labels.find { |label| label.title.downcase == attributes[:label].downcase }
+    
+    if existing_label.nil?
+      new_label = Label.new(attributes[:label], 'red')
+      new_label.category = 'Books'
+      @label_manager.labels << new_label
+      label_for_book = new_label
+    else
+      label_for_book = existing_label
+    end
+  
     book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state],
                     archived: false)
     book.author = attributes[:author]
     book.title = attributes[:title]
     book.genre = attributes[:genre]
-    book.label = new_label
-
+    book.label = label_for_book
+  
     @books << book
-
+  
     puts 'Thanks! Your book has been created:'
     puts format_item(@books.length - 1, book, :author, :title, :publisher, :genre, :cover_state, :label)
-  end
+  end  
 
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
