@@ -69,6 +69,9 @@ class BookManager
 
     @books << book
 
+    # Save books to JSON file after successfully adding a new book
+    save_books_to_json
+
     puts 'Thanks! Your book has been created:'
     puts format_item(@books.length - 1, book, :author, :title, :publisher, :genre, :cover_state, :label)
   end
