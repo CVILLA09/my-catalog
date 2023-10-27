@@ -73,6 +73,7 @@ class ConsoleApp
 
   def exit_app
     puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
+    @game_manager.save_games
     exit
   end
 

@@ -1,11 +1,41 @@
 require_relative 'game'
 require_relative 'author'
 require_relative 'author_manager'
+require 'json'
 
 class GameManager
+  attr_accessor :games
+
   def initialize(author_manager)
     @author_manager = author_manager
     @games = []
+    load_games
+  end
+
+  def load_games
+    if File.exist?('games.json')
+      if File.zero?('games.json')
+        puts 'The file is empty'
+      else
+        data = JSON.parse(File.read('games.json'))
+        data.each do |game_data|
+          game = Game.new(game_data['last_played_at'], game_data['multiplayer'])
+          game.title = game_data['title']
+          game.author = Author.new(game_data['author']['first_name'], game_data['author']['last_name'])
+          @author_manager.add_author(game.author)
+          game.genre = game_data['genre']
+          game.label = game_data['label']
+          @games << game
+        end
+      end
+    end
+  end
+
+
+  def save_games
+    File.open('games.json', 'w') do |file|
+      file.write(JSON.pretty_generate(@games.map(&:to_json)))
+    end
   end
 
   def list_games
