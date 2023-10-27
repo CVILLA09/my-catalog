@@ -15,7 +15,7 @@ class MusicAlbumManager
     else
       puts 'List of all music albums:'
       @albums.each_with_index do |album, index|
-        puts format_item(index, album, :album, :artist, :genre, :on_spotify, :label)
+        puts format_item(index, album, :album, :artist, :genre, :publish_date, :on_spotify, :label)
       end
     end
   end
@@ -28,7 +28,7 @@ class MusicAlbumManager
     artist = gets.chomp
     print 'Genre: '
     genre = gets.chomp
-    print 'Publish Date (YYYY/MM/DD): ' # Include the prompt for the publish date
+    print 'Publish Date (YYYY/MM/DD): '
     publish_date = gets.chomp
     print 'On Spotify?(Y/N): '
     on_spotify = gets.chomp.downcase == 'y'
@@ -39,10 +39,10 @@ class MusicAlbumManager
     @albums << music_album
 
     puts 'Thanks! Your music album has been created:'
-    puts "0) Album: #{music_album.album}, Artist: #{music_album.artist}, Genre: #{music_album.genre}, " \
-         "Publish Date: #{music_album.publish_date}, On_Spotify: #{music_album.on_spotify}, Label: #{music_album.label}"
+    puts "Album: #{music_album.album}, Artist: #{music_album.artist}, Genre: #{music_album.genre}, " \
+         "Publish Date: #{music_album.publish_date}, On Spotify: #{music_album.on_spotify}, Label: #{music_album.label}"
 
-    save_music_albums
+    # Do not save here, instead, save when the user explicitly requests to save or on program exit
   end
 
   def format_item(index, item, *attributes)
@@ -51,42 +51,60 @@ class MusicAlbumManager
   end
 
   def load_music_albums
-    return unless File.exist?('music_albums.json')
+    return unless File.exist?('./classes/music_albums.json')
 
-    music_album_data = JSON.parse(File.read('music_albums.json'))
-    music_album_data.each do |album_data|
-      if album_data['publish_date'].nil?
-        # Handle the case where 'publish_date' is not provided
-        puts "Warning: 'publish_date' is missing for an album."
-        next # Skip this album and continue with the next one
+    begin
+      music_album_data = JSON.parse(File.read('./classes/music_albums.json'))
+
+      if music_album_data.is_a?(Array)
+        music_album_data.each do |album_data|
+          load_single_music_album(album_data)
+        end
+      else
+        puts 'No music albums found in the JSON file.'
       end
-
-      music_album = MusicAlbum.new(
-        album_data['album'],
-        album_data['artist'],
-        album_data['genre'],
-        album_data['on_spotify'],
-        album_data['label'],
-        Date.strptime(album_data['publish_date'], '%Y/%m/%d') # Parse the date string
-      )
-      @albums << music_album
+    rescue JSON::ParserError => e
+      puts "Error parsing JSON: #{e.message}"
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
     end
   end
 
+  def load_single_music_album(album_data)
+    if album_data['publish_date'].nil?
+      puts "Warning: 'publish_date' is missing for an album."
+      return
+    end
+
+    music_album = MusicAlbum.new(
+      album_data['album'],
+      album_data['artist'],
+      album_data['genre'],
+      album_data['on_spotify'],
+      album_data['label'],
+      album_data['publish_date']
+    )
+    @albums << music_album
+  end
+
   def save_music_albums
-    # puts "Hello"
+    if @albums.empty?
+      puts 'No music albums to save.'
+      return
+    end
+
     music_album_data = @albums.map do |album|
       {
         'album' => album.album,
         'artist' => album.artist,
         'genre' => album.genre,
         'on_spotify' => album.on_spotify,
-        'label' => album.label
+        'label' => album.label,
+        'publish_date' => album.publish_date
       }
     end
 
-    File.open('./classes/music_albums.json', 'w') do |file|
-      file.write(music_album_data.to_json)
-    end
+    File.write('./classes/music_albums.json', music_album_data.to_json)
+    puts 'Music albums saved successfully.'
   end
 end

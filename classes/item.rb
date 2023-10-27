@@ -1,5 +1,4 @@
 require 'date'
-require_relative 'author'
 
 class Item
   ## Attributes
@@ -8,7 +7,15 @@ class Item
 
   def initialize(publish_date, archived: false)
     @id = Random.rand(1000)
-    @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
+
+    begin
+      @publish_date = Date.strptime(publish_date, '%Y/%m/%d')
+    rescue ArgumentError => e
+      # Handle the error, for example, by setting publish_date to a default value or re-raising the exception.
+      puts "Error parsing publish_date: #{e.message}"
+      @publish_date = Date.today # Set it to the current date as a default.
+    end
+
     @archived = archived
   end
 

@@ -15,3 +15,5 @@ class MusicAlbum < Item
     super && @on_spotify
   end
 end
+music_album = MusicAlbum.new('sasfd', 'asdt', 'gfhg', 'n', 'gh', '2020-05/07')
+puts music_album.publish_date
