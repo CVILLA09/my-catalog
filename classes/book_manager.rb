@@ -1,11 +1,14 @@
 require_relative 'book'
 require_relative 'label'
+require_relative 'author'
+require_relative 'author_manager'
 
 class BookManager
-  def initialize(label_manager)
+  def initialize(label_manager, author_manager)
     @books = []
     @label_manager = label_manager
-  end
+    @author_manager = author_manager
+  end  
 
   def list_books
     if @books.empty?
@@ -54,7 +57,10 @@ class BookManager
   
     book = Book.new(attributes[:publish_date], attributes[:title], attributes[:publisher], attributes[:cover_state],
                     archived: false)
-    book.author = attributes[:author]
+    author_first_name, author_last_name = attributes[:author].split
+    author = Author.new(author_first_name, author_last_name)
+    @author_manager.add_author(author, 'Books')
+    book.author = author
     book.title = attributes[:title]
     book.genre = attributes[:genre]
     book.label = label_for_book
@@ -68,5 +74,5 @@ class BookManager
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map { |attr| "#{attr.capitalize}: #{item.send(attr)}" }.join(', ')
     "#{index}) #{formatted_attrs}"
-  end
+  end  
 end

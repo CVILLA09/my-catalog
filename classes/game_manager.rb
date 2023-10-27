@@ -58,7 +58,7 @@ class GameManager
     game = Game.new(details[:last_played], details[:multiplayer])
     game.title = details[:title]
     game.author = Author.new(details[:author_name], details[:author_last_name])
-    @author_manager.add_author(game.author)
+    @author_manager.add_author(game.author, 'Games')
     game.genre = details[:genre]
   
     # Check if label already exists or create a new one

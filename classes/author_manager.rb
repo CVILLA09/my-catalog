@@ -7,12 +7,12 @@ class AuthorManager
     @authors = []
   end
 
-  def add_author(author)
+  def add_author(author, category)
     raise 'Invalid author' unless author.is_a?(Author)
-
-    author.category = 'Games'
+  
+    author.category = category
     @authors << author
-  end
+  end  
 
   def list_authors
     if @authors.empty?

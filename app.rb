@@ -8,9 +8,9 @@ require_relative 'classes/author_manager'
 class ConsoleApp
   def initialize
     @label_manager = LabelManager.new
-    @book_manager = BookManager.new(@label_manager)
-    @music_album_manager = MusicAlbumManager.new
     @author_manager = AuthorManager.new
+    @book_manager = BookManager.new(@label_manager, @author_manager)
+    @music_album_manager = MusicAlbumManager.new
     @game_manager = GameManager.new(@author_manager, @label_manager)
     @genres = []
     @labels = []
@@ -154,7 +154,7 @@ class ConsoleApp
 
     case category_choice
     when 1
-      display_authors(@authors.select { |author| author.category == 'Books' })
+      display_authors(@author_manager.authors.select { |author| author.category == 'Books' })
     when 2
       display_authors(@authors.select { |author| author.category == 'Music Albums' })
     when 3
