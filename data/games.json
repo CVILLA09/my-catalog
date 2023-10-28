@@ -1,34 +1,48 @@
 [
   {
-    "last_played_at": "2023-01-15",
-    "title": "Test Game 1",
-    "author": {
-      "first_name": "John",
-      "last_name": "Doe"
-    },
+    "id": 468,
+    "title": "Valorant",
+    "last_played_at": "2020/02/02",
+    "multiplayer": true,
     "genre": {
-      "name": "Action"
+      "id": 2,
+      "name": "Shooter",
+      "category": "Games"
     },
     "label": {
-      "title": "Favorite",
-      "color": "red"
+      "title": "Online Games",
+      "color": "red",
+      "category": "Games"
     },
-    "multiplayer": true
+    "source": null,
+    "author": {
+      "id": 166,
+      "first_name": "Riot",
+      "last_name": "",
+      "category": "Games"
+    }
   },
   {
-    "last_played_at": "2023-01-20",
-    "title": "Test Game 2",
-    "author": {
-      "first_name": "Alice",
-      "last_name": "Smith"
-    },
+    "id": 781,
+    "title": "Age of Empires",
+    "last_played_at": "2021/01/01",
+    "multiplayer": true,
     "genre": {
-      "name": "Adventure"
+      "id": 372,
+      "name": "Strategy",
+      "category": "Games"
     },
     "label": {
-      "title": "Casual",
-      "color": "green"
+      "title": "Classic Games",
+      "color": "red",
+      "category": "Games"
     },
-    "multiplayer": false
+    "source": null,
+    "author": {
+      "id": 187,
+      "first_name": "Microsoft",
+      "last_name": "Games",
+      "category": "Games"
+    }
   }
 ]
