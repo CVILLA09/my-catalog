@@ -6,7 +6,7 @@ class GenreManager
 
   def initialize
     @genres = []
-    load_genres
+    # load_genres
   end
 
   def list_genres
@@ -35,12 +35,16 @@ class GenreManager
 
     new_genre = Genre.new(name, category)
     @genres << new_genre
-    save_genres
+    # save_genres
     new_genre
   end
 
   def load_genres
     return unless File.exist?('genres.json')
+    if File.zero?('genres.json')
+      puts 'No genres found.'
+      return
+    end
 
     genre_data = JSON.parse(File.read('genres.json'))
     genre_data.each do |genre_info|

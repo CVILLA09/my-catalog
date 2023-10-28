@@ -10,5 +10,17 @@
     "label_title": "Book Classics",
     "label_color": "red",
     "archived": false
+  },
+  {
+    "author_first_name": "Roberto",
+    "author_last_name": "Arlt",
+    "title": "Los 7 locos",
+    "publisher": "Planeta",
+    "publish_date": "1950-01-01",
+    "genre": "Novel",
+    "cover_state": "Old",
+    "label_title": "Literature",
+    "label_color": "red",
+    "archived": false
   }
 ]

@@ -1,6 +1,7 @@
 require_relative 'game'
 require_relative 'author'
 require_relative 'label'
+require_relative 'genre'
 require_relative 'author_manager'
 require_relative 'label_manager'
 require_relative 'genre_manager'
@@ -31,8 +32,9 @@ class GameManager
         @author_manager.add_author(game.author, 'Games')
 
         # Handle Genre
-        genre = @genre_manager.find_or_create_genre(game_data['genre'], 'Games')
-        game.genre = genre
+        genre_obj = Genre.new(game_data['genre']['name'], 'Games')
+        game.genre = genre_obj
+        @genre_manager.genres << genre_obj
 
         game.label = Label.new(game_data['label']['title'], game_data['label']['color'])
         game.label.category = 'Games'
@@ -92,8 +94,9 @@ class GameManager
     @author_manager.add_author(game.author, 'Games')
 
     # Handle Genre
-    genre = @genre_manager.find_or_create_genre(details[:genre], 'Games')
-    game.genre = genre
+    genre_obj = Genre.new(details[:genre], 'Games')
+    game.genre = genre_obj
+    @genre_manager.genres << genre_obj
 
     game.label = Label.new(details[:label], 'red')
     game.label.category = 'Games'
@@ -112,10 +115,15 @@ class GameManager
     formatted_attrs = attributes.map do |attr|
       if attr == :author
         "Author: #{item.author.last_name} #{item.author.first_name}"
+      elsif attr == :genre
+        "Genre: #{item.genre.name}"
+      elsif attr == :label
+        "Label: #{item.label.title}"
       else
         "#{attr.capitalize}: #{item.send(attr)}"
       end
     end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
+  
 end

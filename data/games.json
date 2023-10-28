@@ -1,10 +1,14 @@
 [
   {
-    "id": 55,
+    "id": 476,
     "title": "Valorant",
-    "last_played_at": "2020/01/02",
+    "last_played_at": "2020/02/02",
     "multiplayer": true,
-    "genre": "#<Genre:0x00007f841789a6c8>",
+    "genre": {
+      "id": 824,
+      "name": "Shooter",
+      "category": "Games"
+    },
     "label": {
       "title": "Online Games",
       "color": "red",
@@ -12,28 +16,32 @@
     },
     "source": null,
     "author": {
-      "id": 256,
-      "first_name": null,
+      "id": 451,
+      "first_name": "Riot",
       "last_name": "",
       "category": "Games"
     }
   },
   {
-    "id": 122,
-    "title": "Mario Bros",
-    "last_played_at": "2000/10/23",
-    "multiplayer": false,
-    "genre": "#<Genre:0x00007f8417899980>",
+    "id": 241,
+    "title": "Age of Empires",
+    "last_played_at": "2021/01/01",
+    "multiplayer": true,
+    "genre": {
+      "id": 882,
+      "name": "Strategy",
+      "category": "Games"
+    },
     "label": {
-      "title": "Nintendo Classics",
+      "title": "Classic Games",
       "color": "red",
       "category": "Games"
     },
     "source": null,
     "author": {
-      "id": 199,
-      "first_name": null,
-      "last_name": "Mayamoto",
+      "id": 92,
+      "first_name": "Microsoft",
+      "last_name": "Games",
       "category": "Games"
     }
   }

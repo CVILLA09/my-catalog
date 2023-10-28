@@ -1,5 +1,7 @@
 require 'json'
 require_relative 'music_album'
+require_relative 'label'
+require_relative 'author'
 
 class MusicAlbumManager
   attr_reader :albums
@@ -36,17 +38,25 @@ class MusicAlbumManager
     print 'On Spotify?(Y/N): '
     on_spotify = gets.chomp.downcase == 'y'
     print 'Label: '
-    label_title = gets.chomp
+    label = gets.chomp
 
     # Handle Genre
     genre_obj = @genre_manager.find_or_create_genre(genre, 'Music Albums')
+    # Handle Author
+    artist_created = Author.new(artist, '')
+    @author_manager.add_author(artist_created, 'Music Albums')
+    # Handle Label
+    label_obj = Label.new(label, 'green')
+    label_obj.category = 'Music Albums'
+    @label_manager.labels << label_obj
+
 
     attributes = {
       album: album,
-      artist: artist,
+      artist: artist_created,
       genre: genre_obj,
       on_spotify: on_spotify,
-      label: Label.new(label_title, 'green'),
+      label: label_obj, # TODO ,
       publish_date: publish_date
     }
     music_album = MusicAlbum.new(attributes)
@@ -99,13 +109,21 @@ class MusicAlbumManager
 
     # Handle Genre
     genre = @genre_manager.find_or_create_genre(album_data['genre'], 'Music Albums')
+    # Handle Author
+    artist_created = Author.new(album_data['artist'], '')
+    @author_manager.add_author(artist_created, 'Music Albums')
+    # Handle Label
+    label_obj = Label.new(album_data['label'], 'green')
+    label_obj.category = 'Music Albums'
+    @label_manager.labels << label_obj
+  
 
     attributes = {
       album: album_data['album'],
-      artist: album_data['artist'],
+      artist: artist_created,
       genre: genre,
       on_spotify: album_data['on_spotify'],
-      label: Label.new(album_data['label'], 'green'),
+      label: label_obj,
       publish_date: album_data['publish_date']
     }
     music_album = MusicAlbum.new(attributes)
@@ -120,7 +138,7 @@ class MusicAlbumManager
     music_album_data = @albums.map do |album|
       {
         'album' => album.album,
-        'artist' => album.artist,
+        'artist' => album.artist.first_name,
         'genre' => album.genre.name,
         'on_spotify' => album.on_spotify,
         'label' => album.label.title,

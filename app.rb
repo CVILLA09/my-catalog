@@ -162,7 +162,7 @@ class ConsoleApp
     when 1
       display_authors(@author_manager.authors.select { |author| author.category == 'Books' })
     when 2
-      display_authors(@authors.select { |author| author.category == 'Music Albums' })
+      display_authors(@author_manager.authors.select { |author| author.category == 'Music Albums' })
     when 3
       display_authors(@author_manager.authors.select { |author| author.category == 'Games' })
     else
