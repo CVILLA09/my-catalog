@@ -14,7 +14,6 @@ describe GameManager do
   let(:genre_manager) { GenreManager.new }
   let(:game_manager) { GameManager.new(label_manager, author_manager, genre_manager) }
 
-
   it 'loads games from JSON' do
     sample_game_data = [
       {
