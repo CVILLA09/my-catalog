@@ -10,11 +10,10 @@ class ConsoleApp
   def initialize
     @label_manager = LabelManager.new
     @author_manager = AuthorManager.new
-    @book_manager = BookManager.new(@label_manager, @author_manager)
-    @music_album_manager = MusicAlbumManager.new
-    @game_manager = GameManager.new(@author_manager, @label_manager)
-    @genres = []
-    @labels = []
+    @genre_manager = GenreManager.new
+    @book_manager = BookManager.new(@label_manager, @author_manager, @genre_manager)
+    @music_album_manager = MusicAlbumManager.new(@label_manager, @author_manager, @genre_manager)
+    @game_manager = GameManager.new(@label_manager, @author_manager, @genre_manager)
   end
 
   def run
@@ -75,6 +74,7 @@ class ConsoleApp
   def exit_app
     puts 'Thank you for using our app "My Catalog of Things"! Goodbye!'
     @music_album_manager.save_music_albums
+    @game_manager.save_games
     exit
   end
 
@@ -110,20 +110,24 @@ class ConsoleApp
 
     case category_choice
     when 1
-      display_genres(@genres.select { |genre| genre.category == 'Books' })
+      display_genres(@genre_manager.genres.select { |genre| genre.category == 'Books' })
     when 2
-      display_genres(@genres.select { |genre| genre.category == 'Music Albums' })
+      display_genres(@genre_manager.genres.select { |genre| genre.category == 'Music Albums' })
     when 3
-      display_genres(@genres.select { |genre| genre.category == 'Games' })
+      display_genres(@genre_manager.genres.select { |genre| genre.category == 'Games' })
     else
       puts 'Invalid category choice.'
     end
   end
 
   def display_genres(genres)
-    puts 'Genres:'
-    genres.each do |genre|
-      puts "ID: #{genre.id}, Name: #{genre.name}, Items: #{genre.items.count}"
+    if genres.empty?
+      puts 'No genres found for this category.'
+    else
+      puts 'Genres:'
+      genres.each do |genre|
+        puts "Name: #{genre.name}, Category: #{genre.category}, Number of Items: #{genre.items.count}"
+      end
     end
     puts 'Press any key to return to the main menu'
     gets.chomp
@@ -158,7 +162,7 @@ class ConsoleApp
     when 1
       display_authors(@author_manager.authors.select { |author| author.category == 'Books' })
     when 2
-      display_authors(@authors.select { |author| author.category == 'Music Albums' })
+      display_authors(@author_manager.authors.select { |author| author.category == 'Music Albums' })
     when 3
       display_authors(@author_manager.authors.select { |author| author.category == 'Games' })
     else

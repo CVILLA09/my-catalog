@@ -22,7 +22,7 @@ class Book < Item
       'title' => @title,
       'publisher' => @publisher,
       'publish_date' => @publish_date,
-      'genre' => @genre,
+      'genre' => @genre.name,
       'cover_state' => @cover_state,
       'label_title' => @label.title,
       'label_color' => @label.color,

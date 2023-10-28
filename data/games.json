@@ -1,0 +1,48 @@
+[
+  {
+    "id": 672,
+    "title": "Valorant",
+    "last_played_at": "2020/02/02",
+    "multiplayer": true,
+    "genre": {
+      "id": 167,
+      "name": "Shooter",
+      "category": "Games"
+    },
+    "label": {
+      "title": "Online Games",
+      "color": "red",
+      "category": "Games"
+    },
+    "source": null,
+    "author": {
+      "id": 426,
+      "first_name": "Riot",
+      "last_name": "",
+      "category": "Games"
+    }
+  },
+  {
+    "id": 135,
+    "title": "Age of Empires",
+    "last_played_at": "2021/01/01",
+    "multiplayer": true,
+    "genre": {
+      "id": 249,
+      "name": "Strategy",
+      "category": "Games"
+    },
+    "label": {
+      "title": "Classic Games",
+      "color": "red",
+      "category": "Games"
+    },
+    "source": null,
+    "author": {
+      "id": 535,
+      "first_name": "Microsoft",
+      "last_name": "Games",
+      "category": "Games"
+    }
+  }
+]

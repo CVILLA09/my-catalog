@@ -1,5 +1,6 @@
 require_relative 'item'
 require_relative 'author'
+require_relative 'label'
 require 'date'
 class Game < Item
   attr_accessor :last_played_at, :title, :multiplayer, :genre, :label, :source
@@ -20,5 +21,22 @@ class Game < Item
 
   def can_be_archived?
     Date.today.year - @last_played_at.year > 2 && super
+  end
+
+  def move_to_archive
+    @archived = true if can_be_archived?
+  end
+
+  def to_json(*_args)
+    {
+      id: @id,
+      title: @title,
+      last_played_at: @last_played_at.to_s.gsub('-', '/'),
+      multiplayer: @multiplayer,
+      genre: @genre.to_json,
+      label: @label.to_json,
+      source: @source,
+      author: @author.to_json
+    }
   end
 end
