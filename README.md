@@ -44,7 +44,7 @@ Catalog of my things is a simple console app that allows users to manage collect
 
 ## Walkthrough video 🎥<a name="#walkthrough-video"></a>
 
-[Comming Soon!]()
+[Here's the link for the video overview!](https://drive.google.com/file/d/1JV5EgnuqgEnat-guX93H81I3U9Y-U7zh/view?usp=sharing)
 
 ## 🛠 Built With <a name="built-with"></a>
 
