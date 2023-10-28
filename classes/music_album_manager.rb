@@ -148,7 +148,6 @@ class MusicAlbumManager
     label_obj.category = 'Music Albums'
     @label_manager.labels << label_obj
 
-
     attributes = {
       album: album_data['album'],
       artist: artist_created,
