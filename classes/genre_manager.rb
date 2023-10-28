@@ -41,7 +41,8 @@ class GenreManager
 
   def load_genres
     return unless File.exist?('genres.json')
-    if File.zero?('genres.json')
+
+    if File.empty?('genres.json')
       puts 'No genres found.'
       return
     end

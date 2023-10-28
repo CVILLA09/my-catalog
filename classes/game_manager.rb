@@ -107,17 +107,19 @@ class GameManager
 
   def display_game_info(game)
     puts 'Thanks! Your game has been created:'
-    puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name}, Genre: #{game.genre.name}, " \
+    puts "0) Title: #{game.title}, Author: #{game.author.first_name} #{game.author.last_name},
+     Genre: #{game.genre.name}, " \
          "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Label: #{game.label.title}"
   end
 
   def format_item(index, item, *attributes)
     formatted_attrs = attributes.map do |attr|
-      if attr == :author
+      case attr
+      when :author
         "Author: #{item.author.last_name} #{item.author.first_name}"
-      elsif attr == :genre
+      when :genre
         "Genre: #{item.genre.name}"
-      elsif attr == :label
+      when :label
         "Label: #{item.label.title}"
       else
         "#{attr.capitalize}: #{item.send(attr)}"
@@ -125,5 +127,4 @@ class GameManager
     end.join(', ')
     "#{index}) #{formatted_attrs}"
   end
-  
 end

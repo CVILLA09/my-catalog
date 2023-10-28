@@ -19,13 +19,6 @@ class Game < Item
     @author = value
   end
 
-  def label=(value)
-    raise 'Invalid label' unless value.is_a?(Label)
-
-    value.category = 'Games'
-    @label = value
-  end
-
   def can_be_archived?
     Date.today.year - @last_played_at.year > 2 && super
   end

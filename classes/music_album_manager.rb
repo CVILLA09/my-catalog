@@ -26,6 +26,27 @@ class MusicAlbumManager
   end
 
   def add_music_album
+    album, artist, genre, publish_date, on_spotify, label = album_details
+    genre_obj = @genre_manager.find_or_create_genre(genre, 'Music Albums')
+    artist_created = create_or_get_artist(artist)
+    label_obj = create_label(label)
+
+    attributes = {
+      album: album,
+      artist: artist_created,
+      genre: genre_obj,
+      on_spotify: on_spotify,
+      label: label_obj,
+      publish_date: publish_date
+    }
+
+    music_album = MusicAlbum.new(attributes)
+    @albums << music_album
+
+    display_music_album_creation(music_album)
+  end
+
+  def album_details
     puts 'Enter the details for the music album:'
     print 'Album: '
     album = gets.chomp
@@ -40,46 +61,56 @@ class MusicAlbumManager
     print 'Label: '
     label = gets.chomp
 
-    # Handle Genre
-    genre_obj = @genre_manager.find_or_create_genre(genre, 'Music Albums')
-    # Handle Author
+    [album, artist, genre, publish_date, on_spotify, label]
+  end
+
+  def create_or_get_artist(artist)
     artist_created = Author.new(artist, '')
     @author_manager.add_author(artist_created, 'Music Albums')
-    # Handle Label
+    artist_created
+  end
+
+  def create_label(label)
     label_obj = Label.new(label, 'green')
     label_obj.category = 'Music Albums'
     @label_manager.labels << label_obj
+    label_obj
+  end
 
-
-    attributes = {
-      album: album,
-      artist: artist_created,
-      genre: genre_obj,
-      on_spotify: on_spotify,
-      label: label_obj, # TODO ,
-      publish_date: publish_date
-    }
-    music_album = MusicAlbum.new(attributes)
-    @albums << music_album
+  def display_music_album_creation(music_album)
     puts 'Thanks! Your music album has been created:'
     puts format_item(@albums.size - 1, music_album, :album, :artist, :genre, :publish_date, :on_spotify, :label)
   end
 
   def format_item(index, item, *attributes)
-    formatted_attrs = attributes.map do |attr|
-      value = item.send(attr)
-      case attr
-      when :genre
-        "Genre: #{value.name if value.is_a?(Genre)}"
-      when :author
-        "Author: #{value.first_name} #{value.last_name if value.is_a?(Author)}"
-      when :label
-        "Label: #{value.title if value.is_a?(Label)}"
-      else
-        "#{attr.capitalize}: #{value}"
-      end
-    end.join(', ')
+    formatted_attrs = attributes.map { |attr| format_attribute(item, attr) }.join(', ')
     "#{index}) #{formatted_attrs}"
+  end
+
+  def format_attribute(item, attr)
+    value = item.send(attr)
+    case attr
+    when :genre
+      "Genre: #{format_genre(value)}"
+    when :author
+      "Author: #{format_author(value)}"
+    when :label
+      "Label: #{format_label(value)}"
+    else
+      "#{attr.capitalize}: #{value}"
+    end
+  end
+
+  def format_genre(genre)
+    genre.is_a?(Genre) ? genre.name : 'N/A'
+  end
+
+  def format_author(author)
+    author.is_a?(Author) ? "#{author.first_name} #{author.last_name}" : 'N/A'
+  end
+
+  def format_label(label)
+    label.is_a?(Label) ? label.title : 'N/A'
   end
 
   def load_music_albums
@@ -116,7 +147,7 @@ class MusicAlbumManager
     label_obj = Label.new(album_data['label'], 'green')
     label_obj.category = 'Music Albums'
     @label_manager.labels << label_obj
-  
+
 
     attributes = {
       album: album_data['album'],

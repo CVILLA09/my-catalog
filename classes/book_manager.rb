@@ -79,20 +79,34 @@ class BookManager
   end
 
   def format_item(index, item, *attributes)
-    formatted_attrs = attributes.map do |attr|
-      value = item.send(attr)
-      case attr
-      when :genre
-        "Genre: #{value.name if value.is_a?(Genre)}"
-      when :author
-        "Author: #{value.first_name} #{value.last_name if value.is_a?(Author)}"
-      when :label
-        "Label: #{value.title if value.is_a?(Label)}"
-      else
-        "#{attr.capitalize}: #{value}"
-      end
-    end.join(', ')
+    formatted_attrs = attributes.map { |attr| format_attribute(item, attr) }.join(', ')
     "#{index}) #{formatted_attrs}"
+  end
+
+  def format_attribute(item, attr)
+    value = item.send(attr)
+    case attr
+    when :genre
+      "Genre: #{format_genre(value)}"
+    when :author
+      "Author: #{format_author(value)}"
+    when :label
+      "Label: #{format_label(value)}"
+    else
+      "#{attr.capitalize}: #{value}"
+    end
+  end
+
+  def format_genre(genre)
+    genre.is_a?(Genre) ? genre.name : 'N/A'
+  end
+
+  def format_author(author)
+    author.is_a?(Author) ? "#{author.first_name} #{author.last_name if author.is_a?(Author)}" : 'N/A'
+  end
+
+  def format_label(label)
+    label.is_a?(Label) ? label.title : 'N/A'
   end
 
   def save_books_to_json
