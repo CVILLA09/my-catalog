@@ -29,10 +29,6 @@ describe GenreManager do
     end
   end
 end
-require 'rspec'
-require 'json'
-require './classes/genre'
-require './classes/genre_manager'
 
 describe GenreManager do
   let(:genre_manager) { GenreManager.new }

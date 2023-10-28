@@ -6,8 +6,6 @@ require_relative '../classes/label_manager'
 require_relative '../classes/genre_manager'
 require_relative '../classes/author_manager'
 
-
-
 describe MusicAlbumManager do
   before(:each) do
     @label_manager = LabelManager.new # You'll need to create LabelManager and other dependencies
@@ -22,11 +20,11 @@ describe MusicAlbumManager do
         'Test Album',
         'Test Artist',
         'Test Genre',
-        '2023/10/28',  # Use a valid date format
-        'Y',            # Assume it's on Spotify
+        '2023/10/28', # Use a valid date format
+        'Y', # Assume it's on Spotify
         'Test Label'
       ]
-      
+
       # Stub gets method to provide input
       allow(@music_album_manager).to receive(:gets).and_return(*album_data)
 
