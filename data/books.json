@@ -1,0 +1,38 @@
+[
+  {
+    "author_first_name": "Aldous",
+    "author_last_name": "Huxley",
+    "title": "Brave New World",
+    "publisher": "Chatto & Windus",
+    "publish_date": "1932-05-06",
+    "genre": "Dystopian fiction",
+    "cover_state": "Good",
+    "label_title": "Book Classics",
+    "label_color": "red",
+    "archived": false
+  },
+  {
+    "author_first_name": "Roberto",
+    "author_last_name": "Arlt",
+    "title": "Los 7 locos",
+    "publisher": "Planeta",
+    "publish_date": "1950-01-01",
+    "genre": "Novel",
+    "cover_state": "Old",
+    "label_title": "Literature",
+    "label_color": "red",
+    "archived": false
+  },
+  {
+    "author_first_name": "Maya",
+    "author_last_name": "Banks",
+    "title": "My home",
+    "publisher": "isbn",
+    "publish_date": "2023-09-22",
+    "genre": "rom-com",
+    "cover_state": "new",
+    "label_title": "great",
+    "label_color": "red",
+    "archived": false
+  }
+]
