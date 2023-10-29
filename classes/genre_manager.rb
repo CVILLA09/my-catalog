@@ -27,5 +27,4 @@ class GenreManager
     # save_genres
     new_genre
   end
-
 end

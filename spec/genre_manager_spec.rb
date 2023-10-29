@@ -16,6 +16,6 @@ describe GenreManager do
 
     # Attempt to find an existing genre
     genre2 = @genre_manager.find_or_create_genre('Adventure', 'Movies')
-    expect(genre2).to eq(genre)  # Should return the existing genre
+    expect(genre2).to eq(genre) # Should return the existing genre
   end
 end
