@@ -22,5 +22,17 @@
     "label_title": "Literature",
     "label_color": "red",
     "archived": false
+  },
+  {
+    "author_first_name": "Maya",
+    "author_last_name": "Banks",
+    "title": "My home",
+    "publisher": "isbn",
+    "publish_date": "2023-09-22",
+    "genre": "rom-com",
+    "cover_state": "new",
+    "label_title": "great",
+    "label_color": "red",
+    "archived": false
   }
 ]
